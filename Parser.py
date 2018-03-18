@@ -3,7 +3,7 @@ import re
 import pandas as pd
 
 base_path = '/home/eduardo/Desktop/baseline-metric/rectangles/'
-
+metric_path = '/home/eduardo/PycharmProjects/treemap-metrics/metric_results/'
 
 def parse_dataset(dataset_id):
     # Separate baseline dirs from real dirs
@@ -73,3 +73,20 @@ def natural_sort(l):
     convert = lambda text: int(text) if text.isdigit() else text.lower()
     alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
     return sorted(l, key=alphanum_key)
+
+
+def read_ct_metric(dataset_id):
+    ct_values = {}
+
+    paths = [os.path.join(metric_path, f) for f in os.listdir(metric_path)
+             if os.path.isfile(os.path.join(metric_path, f)) and '-' + dataset_id + '-' in f]
+
+    for path in paths:
+        # Match technique name from path
+        match = re.match(metric_path + '(\w+)-' + dataset_id +'-ct', path)
+        if match:
+            # Read csvs from matched paths
+            technique_id = match.group(1)
+            ct_values[technique_id] = pd.read_csv(path, index_col='id')
+
+    return ct_values

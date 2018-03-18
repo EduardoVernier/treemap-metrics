@@ -9,6 +9,7 @@ def compute_and_cache_metrics(dataset_id):
     dataframes = Parser.parse_dataset(dataset_id)
 
     for technique, df_list in dataframes.items():
+        print(technique, end='')
         # Compute aspect ratios and weight of cells
         ar_cache_path = 'metric_results/' + technique + '-' + dataset_id + '-ar.csv'
         ar_df = pd.DataFrame()
@@ -48,8 +49,7 @@ def compute_and_cache_metrics(dataset_id):
         ar_df.to_csv(ar_cache_path, index_label='id')
         ct_df.to_csv(ct_cache_path, index_label='id')
         rpc_df.to_csv(rpc_cache_path, index_label='id')
-
-        break
+        print(' done.')
 
     return None
 
