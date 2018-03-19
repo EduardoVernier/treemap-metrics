@@ -27,3 +27,12 @@ elif action == 'kde-real-baseline':
     rpc_values = Parser.read_rpc_metric(dataset_id)
     KDE.plot_real_vs_baseline(rpc_values, dataset_id, 'rpc', True)
     KDE.plot_real_vs_baseline(rpc_values, dataset_id, 'rpc', False)
+
+elif 'time-boxplots':
+    ar_values = Parser.read_aspect_ratios(dataset_id)
+    Boxplots.plot_ar(ar_values, dataset_id)
+    ct_values = Parser.read_ct_metric(dataset_id)
+    Boxplots.plot_instability(ct_values, dataset_id, 'ct')
+    rpc_values = Parser.read_rpc_metric(dataset_id)
+    Boxplots.plot_instability(rpc_values, dataset_id, 'rpc')
+

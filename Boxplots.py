@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import math
 
-def plot_ar(values):
+def plot_ar(values, dataset_id):
     nrow = 6
     ncol = 2
     fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
-    fig.suptitle('Aspect Ratios', fontsize=14)
+    # fig.suptitle('Aspect Ratios', fontsize=14)
     fig.tight_layout()
-    fig.subplots_adjust(top=0.95)
+    # fig.subplots_adjust(top=0.95)
 
     technique_ids = sorted(values)
     for i, ax in enumerate(fig.axes):
@@ -18,10 +18,10 @@ def plot_ar(values):
 
         statistics_list = []
         # ax.set_title(technique)
-        ax.set_xlabel(technique)
+        ax.set_title(technique)
         print(technique)
 
-        n_revisions = int(len(values[technique])/2)
+        n_revisions = int(len(values[technique].columns)/2)
         for revision in range(n_revisions):
             w_col = 'w_' + str(revision)
             ar_col = 'ar_' + str(revision)
@@ -57,13 +57,54 @@ def plot_ar(values):
 
         statistics_list.sort(key=lambda x: -x['med'])
         bp = ax.bxp(statistics_list, showfliers=False, patch_artist=True, widths=1);
-        styleBoxplot(bp, ax, fig, len(statistics_list))
+        styleBoxplot(bp, fig, ax, n_revisions)
+        ax.set_ylim(ymin=0, ymax=1)
+        fig.savefig('boxplots/ar/' + dataset_id + '-arbp.png')
+    # plt.show()
+    print('---')
+    return None
 
+
+def plot_instability(values, dataset_id, metric_id):
+    nrow = 6
+    ncol = 2
+    fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
+    # fig.delaxes(axs[5, 1])
+    fig.tight_layout()
+
+    technique_ids = sorted(values)
+    for i, ax in enumerate(fig.axes):
+        technique = technique_ids[i]
+        # ax.set_title(technique)
+        ax.set_title(technique)
+
+        print(technique)
+
+        data = []
+        for revision in range(int(len(values[technique].columns)/2)):
+            df = values[technique]
+            r_col = df.columns[2 * revision]
+            b_col = df.columns[2 * revision + 1]
+
+            diff = values[technique][[r_col, b_col]].max(axis=1) - values[technique][b_col]
+            diff = diff.dropna()
+            # display(df)
+            data.append(diff.values)
+
+        data.sort(key=lambda x: -np.median(x))
+        bp = ax.boxplot(data, whis=[5, 95], showfliers=False, patch_artist=True, widths=1);
+
+        ax.set_ylim(ymin=-0, ymax=1)
+        ax.set_yticks([0, .25, .5, .75, 1], minor=False)
+        ax.set_yticklabels([0, .25, .5, .75, 1], fontdict=None, minor=False)
+        styleBoxplot(bp, fig, ax, len(data))
+
+    fig.savefig('boxplots/' + metric_id + '/' + dataset_id + '-' + metric_id + 'bp.png')
     return None
 
 
 def styleBoxplot(bp, fig, ax, n_revisions):
-    def get_ax_size(ax):
+    def get_ax_size(fig, ax):
         bbox = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
         width, height = bbox.width, bbox.height
         width *= fig.dpi
@@ -81,27 +122,27 @@ def styleBoxplot(bp, fig, ax, n_revisions):
         median.set(color='#000000',
                    linewidth=2,
                    solid_capstyle="butt",
-                   ms=(get_ax_size(ax)[0]) / (n_revisions))
+                   ms=(get_ax_size(fig, ax)[0]) / (n_revisions))
         median.set_zorder(11)
         # median.set_xdata([i + 1 - 0.3, i + 1 + 0.3])
     for whisker in bp['whiskers']:
         whisker.set(color='#CCCCCC',
                     linestyle='-',
                     solid_capstyle="butt")
-        whisker.set_path_effects(
-            [pe.PathPatchEffect(edgecolor='#CCCCCC', linewidth=((get_ax_size(ax)[0]) / (n_revisions)) * 1.08,
-                                facecolor='black')])
+        whisker.set_path_effects([pe.PathPatchEffect(edgecolor='#CCCCCC',
+                                                     linewidth=((get_ax_size(fig, ax)[0]) / (n_revisions)) * 1.08,
+                                                     facecolor='black')])
     for cap in bp['caps']:
         cap.set(color='#FFFFFF', linewidth=0)
 
     # Set only 3 ticks on x
     ax.set_xticks([1, n_revisions / 2, n_revisions], minor=False)
-    # ax.set_xticklabels([1, int(n_revisions / 2), n_revisions], fontdict=None, minor=False)
-    ax.set_xticklabels(["", "", ""], fontdict=None, minor=False)
+    ax.set_xticklabels([1, int(n_revisions / 2), n_revisions], fontdict=None, minor=False)
+    # ax.set_xticklabels(["", "", ""], fontdict=None, minor=False)
 
     # Remove extra spines and ticks
-    ax.spines['top'].set_visible(False)
+    #ax.spines['top'].set_visible(False)
+    #ax.spines['right'].set_visible(False)
     ax.spines['left'].set_zorder(100)
-    ax.spines['right'].set_visible(False)
     ax.tick_params(axis='x', which='both', top='off', direction='out')
     ax.tick_params(axis='y', which='both', right='off', left='on', direction='out')
