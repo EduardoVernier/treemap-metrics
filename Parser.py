@@ -90,3 +90,37 @@ def read_ct_metric(dataset_id):
             ct_values[technique_id] = pd.read_csv(path, index_col='id')
 
     return ct_values
+
+
+def read_rpc_metric(dataset_id):
+    rpc_values = {}
+
+    paths = [os.path.join(metric_path, f) for f in os.listdir(metric_path)
+             if os.path.isfile(os.path.join(metric_path, f)) and '-' + dataset_id + '-' in f]
+
+    for path in paths:
+        # Match technique name from path
+        match = re.match(metric_path + '(\w+)-' + dataset_id +'-rpc', path)
+        if match:
+            # Read csvs from matched paths
+            technique_id = match.group(1)
+            rpc_values[technique_id] = pd.read_csv(path, index_col='id')
+
+    return rpc_values
+
+
+def read_aspect_ratios(dataset_id):
+    ar_values = {}
+
+    paths = [os.path.join(metric_path, f) for f in os.listdir(metric_path)
+             if os.path.isfile(os.path.join(metric_path, f)) and '-' + dataset_id + '-' in f]
+
+    for path in paths:
+        # Match technique name from path
+        match = re.match(metric_path + '(\w+)-' + dataset_id +'-ar', path)
+        if match:
+            # Read csvs from matched paths
+            technique_id = match.group(1)
+            ar_values[technique_id] = pd.read_csv(path, index_col='id')
+
+    return ar_values

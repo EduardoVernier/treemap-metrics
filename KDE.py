@@ -7,18 +7,18 @@ from scipy import stats
 import random
 
 
-def plot_real_vs_baseline(values):
+def plot_real_vs_baseline(values, dataset_id, base_metric, log):
 
     nrow = 6
     ncol = 2
-    fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 30))
+    fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(7, 18))
     fig.tight_layout()
 
     technique_list = sorted(values)
-
     for i, technique_id in enumerate(technique_list):
         print(technique_id)
         ax = fig.axes[i]
+        ax.set_title(technique_id)
         full_df = values[technique_id]
         real_series = full_df.iloc[:, ::2].stack().values
         baseline_series = full_df.iloc[:, 1::2].stack().values
@@ -32,16 +32,21 @@ def plot_real_vs_baseline(values):
         matrix = pd.DataFrame([real_series, baseline_series]).sample(sample_size, axis=1).as_matrix()
         dens = stats.gaussian_kde(matrix)
         dens_pt = dens(matrix)
-        colours = make_colors(dens_pt, 'inferno', len(real_series) > 5000)
+        colours = make_colors(dens_pt, 'inferno', log)
         ax.scatter(matrix[0], matrix[1], color=colours, s=5, alpha=.25)
+        ax.set_xlim(xmin=0)
+        ax.set_ylim(ymin=0)
 
-    plt.show()
+    # plt.show()
+    colormap_mode = 'log' if log else 'linear'
+    fig.savefig('kde/' + dataset_id + '-' + base_metric + '-' + colormap_mode + '-kde' + '.png')
+    print('---')
     return None
 
 
 def make_colors(vals, cmap, log):
     if log:
-        norm = LogNorm(vmin=vals.min(), vmax=vals.max()*5)
+        norm = LogNorm(vmin=vals.min(), vmax=vals.max()**2)
     else:
         norm = Normalize(vmin=vals.min(), vmax=vals.max())
     return [cm.ScalarMappable(norm=norm, cmap=cmap).to_rgba(val) for val in vals]
