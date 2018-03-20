@@ -4,21 +4,41 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm, Normalize
 from matplotlib import cm
 from scipy import stats
-import random
+from mpl_toolkits.axes_grid1 import ImageGrid
 
+acronyms = {
+    'ApproximationTreeMap': 'APP',
+    'HilbertTreeMap': 'HIL',
+    'IncrementalLayoutWithMoves': 'LM4',
+    'IncrementalLayoutWithoutMoves': 'LM0',
+    'MooreTreeMap': 'MOO',
+    'PivotByMiddle': 'PBM',
+    'PivotBySize': 'PBZ',
+    'PivotBySplit': 'PBS',
+    'SliceAndDice': 'SND',
+    'SpiralTreeMap': 'SPI',
+    'SquarifiedTreeMap': 'SQR',
+    'StripTreeMap': 'STR'
+}
 
 def plot_real_vs_baseline(values, dataset_id, base_metric, log):
 
     nrow = 6
     ncol = 2
-    fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(7, 18))
-    fig.tight_layout()
+    fig = plt.figure(1, (8, 14))
+    fig.subplots_adjust(left=0.08, right=0.99, top=.99, bottom=.01)
+    grid = ImageGrid(fig, 111,
+                     nrows_ncols=(nrow, ncol),
+                     axes_pad=0.05,
+                     share_all=True,
+                     label_mode="1")
 
     technique_list = sorted(values)
     for i, technique_id in enumerate(technique_list):
         print(technique_id)
-        ax = fig.axes[i]
-        ax.set_title(technique_id)
+        ax = grid[i]
+        ax.text(.97, .9, acronyms[technique_id], horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
+        #ax.set_title(technique_id)
         full_df = values[technique_id]
         real_series = full_df.iloc[:, ::2].stack().values
         baseline_series = full_df.iloc[:, 1::2].stack().values
@@ -34,13 +54,15 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         dens_pt = dens(matrix)
         colours = make_colors(dens_pt, 'inferno', log)
         ax.scatter(matrix[0], matrix[1], color=colours, s=5, alpha=.25)
+
         ax.set_xlim(xmin=0)
         ax.set_ylim(ymin=0)
+        plt.axis('equal')
 
+    colormap_mode_str = 'log' if log else 'linear'
+    fig.savefig('kde/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight')
+    # plt.draw()
     # plt.show()
-    colormap_mode = 'log' if log else 'linear'
-    fig.savefig('kde/' + dataset_id + '-' + base_metric + '-' + colormap_mode + '-kde' + '.png')
-    print('---')
     return None
 
 
