@@ -37,11 +37,10 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
     for i, technique_id in enumerate(technique_list):
         print(technique_id)
         ax = grid[i]
-        ax.text(.97, .9, acronyms[technique_id], horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
         #ax.set_title(technique_id)
         full_df = values[technique_id]
-        real_series = full_df.iloc[:, ::2].stack().values
-        baseline_series = full_df.iloc[:, 1::2].stack().values
+        real_series = full_df.iloc[:, ::2].stack().values.clip(0,1)
+        baseline_series = full_df.iloc[:, 1::2].stack().values.clip(0,1)
         baseline_series += np.random.normal(0, .001, baseline_series.shape) # Adding a little bit of noise to the baseline
 
         # Plot all points in black with alpha
@@ -54,8 +53,9 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         dens_pt = dens(matrix)
         colours = make_colors(dens_pt, 'inferno', log)
         ax.scatter(matrix[0], matrix[1], color=colours, s=5, alpha=.25)
+        ax.text(.97, .9, acronyms[technique_id], horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
 
-        ax.set_xlim(xmin=0)
+        ax.set_xlim(xmin=0, xmax=1)
         ax.set_ylim(ymin=0)
         plt.axis('equal')
 
