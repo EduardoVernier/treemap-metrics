@@ -27,13 +27,21 @@ def plot(dataset_ids):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     mat = ax.matshow(ar_matrix, cmap=plt.cm.viridis)
+
+    # Ticks, labels and grids
     ax.set_xticklabels(dataset_ids, rotation='vertical')
     ax.set_xticks(range(len(dataset_ids)), minor=False)
     ax.set_yticklabels(technique_acronyms)
     ax.set_yticks(range(len(technique_acronyms)), minor=False)
+    ax.set_xticks([x - 0.5 for x in plt.gca().get_xticks()][1:], minor='true')
+    ax.set_yticks([y - 0.5 for y in plt.gca().get_yticks()][1:], minor='true')
+    plt.grid(which='minor', color='#999999', linestyle='-', linewidth=1)
+    ax.tick_params(axis=u'both', which=u'both', length=0)
 
     fig.colorbar(mat)
-    plt.show()
+    fig.tight_layout()
+    fig.savefig("matrix-ar.png", dpi=600)
+    # plt.show()
     a = 1
 
 

@@ -44,7 +44,7 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         baseline_series += np.random.normal(0, .001, baseline_series.shape) # Adding a little bit of noise to the baseline
 
         # Plot all points in black with alpha
-        ax.scatter(real_series, baseline_series, color='k', s=5, alpha=.1)
+        ax.scatter(real_series, baseline_series, color='k', s=2, alpha=.1)
 
         # Plot points with color density
         sample_size = 5000 if len(real_series) > 5000 else len(real_series)
@@ -52,15 +52,15 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         dens = stats.gaussian_kde(matrix)
         dens_pt = dens(matrix)
         colours = make_colors(dens_pt, 'inferno', log)
-        ax.scatter(matrix[0], matrix[1], color=colours, s=5, alpha=.25)
+        ax.scatter(matrix[0], matrix[1], color=colours, s=2, alpha=.25)
         ax.text(.97, .9, acronyms[technique_id], horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
 
         ax.set_xlim(xmin=0, xmax=1)
-        ax.set_ylim(ymin=0)
+        ax.set_ylim(ymin=0, ymax=.3)
         plt.axis('equal')
 
     colormap_mode_str = 'log' if log else 'linear'
-    fig.savefig('kde/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight')
+    fig.savefig('kde/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight', dpi=600)
     # plt.draw()
     # plt.show()
     return None
@@ -68,7 +68,7 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
 
 def make_colors(vals, cmap, log):
     if log:
-        norm = LogNorm(vmin=vals.min(), vmax=vals.max()**2)
+        norm = LogNorm(vmin=vals.min()*2, vmax=vals.max()**1.5)
     else:
         norm = Normalize(vmin=vals.min(), vmax=vals.max())
     return [cm.ScalarMappable(norm=norm, cmap=cmap).to_rgba(val) for val in vals]
