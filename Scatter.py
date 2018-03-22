@@ -54,7 +54,6 @@ def plot(dataset_ids):
 
 
 def collect_averages(dataset_ids):
-
     results = []
     for dataset_id in dataset_ids:
         inst_dict = instability_average(dataset_id)

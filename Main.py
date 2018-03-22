@@ -1,6 +1,7 @@
 import sys
 
 import KDE
+import Matrix
 import Metrics
 import Parser
 import Boxplots
@@ -42,9 +43,8 @@ elif action == 'scatter':
     dataset_ids = sys.argv[2:]
     Scatter.plot(dataset_ids)
 
-    #[print(d) for d in dataset_ids]
+elif action == "matrix":
+    dataset_ids = sys.argv[2:]
+    Matrix.plot(dataset_ids)
 
-    # ar_values = Parser.read_aspect_ratios(dataset_id)
-    # ct_values = Parser.read_ct_metric(dataset_id)
-    # rpc_values = Parser.read_rpc_metric(dataset_id)
 
