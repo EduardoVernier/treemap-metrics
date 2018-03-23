@@ -41,7 +41,7 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     if metric_id == 'ar':
         mat = ax.matshow(matrix, cmap=plt.cm.viridis)
     else:
-        mat = ax.matshow(matrix, cmap=plt.cm.viridis_r)  # Invert colormap
+        mat = ax.matshow(matrix, cmap=plt.cm.viridis_r)  # Invert colormap for instability
 
     # Ticks, labels and grids
     ax.set_xticklabels(dataset_ids, rotation='vertical')
@@ -53,15 +53,31 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     plt.grid(which='minor', color='#999999', linestyle='-', linewidth=1)
     ax.tick_params(axis=u'both', which=u'both', length=0)
 
+    # Add the text
+    x_start = 0.0
+    x_end = len(dataset_ids)
+    y_start = 0.0
+    y_end = len(technique_acronyms)
+
+    jump_x = (x_end - x_start) / (2.0 * len(dataset_ids))
+    jump_y = (y_end - y_start) / (2.0 * len(technique_acronyms))
+    x_positions = np.linspace(start=x_start-0.5, stop=x_end-0.5, num=len(dataset_ids), endpoint=False)
+    y_positions = np.linspace(start=y_start-0.5, stop=y_end-0.5, num=len(technique_acronyms), endpoint=False)
+
+    for y_index, y in enumerate(y_positions):
+        for x_index, x in enumerate(x_positions):
+            label = "{0:.3f}".format(matrix[y_index, x_index]).lstrip('0')
+            text_x = x + jump_x
+            text_y = y + jump_y
+            ax.text(text_x, text_y, label, color='black', ha='center', va='center', fontsize=9)
+
     fig.colorbar(mat)
     fig.tight_layout()
     fig.savefig('matrix-'+ metric_id +'.png', dpi=600)
     # plt.show()
 
 
-
 def make_ct_matrix(dataset_ids):
-
     technique_ids = []
     all_means = []
     for dataset_id in dataset_ids:
