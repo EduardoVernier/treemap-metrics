@@ -22,8 +22,9 @@ acronyms = {
 
 def plot(dataset_ids):
     # Plot AR matrix
-    ar_matrix, technique_acronyms = make_ar_matrix(dataset_ids)
-    plot_matrix(ar_matrix, dataset_ids, technique_acronyms, 'ar')
+    weighted_ar_matrix, unweighted_ar_matrix, technique_acronyms = make_ar_matrices(dataset_ids)
+    plot_matrix(weighted_ar_matrix, dataset_ids, technique_acronyms, 'war')
+    plot_matrix(unweighted_ar_matrix, dataset_ids, technique_acronyms, 'uar')
 
     # Plot CT matrix
     ct_matrix, technique_acronyms = make_ct_matrix(dataset_ids)
@@ -138,20 +139,23 @@ def make_rpc_matrix(dataset_ids):
     return np.array(all_means).transpose(), technique_acronyms  # Transpose matrix so each row is a technique and each column a dataset
 
 
-def make_ar_matrix(dataset_ids):
+def make_ar_matrices(dataset_ids):
 
     technique_ids = []
-    all_means = []
+    weighted_means = []
+    unweighted_means = []
     for dataset_id in dataset_ids:
         ar_df = Parser.read_aspect_ratios(dataset_id)
 
-        dataset_means = np.array([])
+        weighted_dataset_means = np.array([])
+        unweighted_dataset_means = np.array([])
         technique_list = sorted(ar_df)
         if len(technique_ids) == 0:
             technique_acronyms = [acronyms[d] for d in technique_list]
 
         for i, technique_id in enumerate(technique_list):
-            technique_means = []
+            weighted_technique_means = []
+            unweighted_technique_means = []
             for revision in range(int(len(ar_df[technique_id].columns) / 2)):
                 df = ar_df[technique_id]
                 w_col = df.columns[2 * revision]
@@ -160,9 +164,12 @@ def make_ar_matrix(dataset_ids):
                 u_avg = ar_df[technique_id][ar_col].mean(axis=0)
                 w_avg = np.average(ar_df[technique_id][ar_col].dropna(), weights=ar_df[technique_id][w_col].dropna())
 
-                technique_means.append((u_avg + w_avg) / 2)
+                weighted_technique_means.append(w_avg)
+                unweighted_technique_means.append(u_avg)
 
-            dataset_means = np.append(dataset_means, np.mean(technique_means))
-        all_means.append(dataset_means)
+            weighted_dataset_means = np.append(weighted_dataset_means, np.mean(weighted_technique_means))
+            unweighted_dataset_means = np.append(unweighted_dataset_means, np.mean(unweighted_technique_means))
+        weighted_means.append(weighted_dataset_means)
+        unweighted_means.append(unweighted_dataset_means)
 
-    return np.array(all_means).transpose(), technique_acronyms  # Transpose matrix so each row is a technique and each column a dataset
+    return np.array(weighted_means).transpose(), np.array(unweighted_means).transpose(), technique_acronyms  # Transpose matrices so each row is a technique and each column a dataset
