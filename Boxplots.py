@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import math
 
-def plot_ar(values, dataset_id):
+def plot_weighted_ar(values, dataset_id):
     nrow = 6
     ncol = 2
     fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
@@ -59,9 +59,39 @@ def plot_ar(values, dataset_id):
         bp = ax.bxp(statistics_list, showfliers=False, patch_artist=True, widths=1);
         styleBoxplot(bp, fig, ax, n_revisions)
         ax.set_ylim(ymin=0, ymax=1)
-        fig.savefig('boxplots/ar/' + dataset_id + '-arbp.png')
+        fig.savefig('boxplots/w_ar/' + dataset_id + '-warbp.png')
     # plt.show()
-    print('---')
+    return None
+
+def plot_unweighted_ar(values, dataset_id):
+    nrow = 6
+    ncol = 2
+    fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
+    # fig.suptitle('Aspect Ratios', fontsize=14)
+    fig.tight_layout()
+    # fig.subplots_adjust(top=0.95)
+
+    technique_ids = sorted(values)
+    for i, ax in enumerate(fig.axes):
+        data = []
+        technique = technique_ids[i]
+
+        # ax.set_title(technique)
+        ax.set_title(technique)
+        print(technique)
+
+        n_revisions = int(len(values[technique].columns)/2)
+        for revision in range(n_revisions):
+            ar_col = 'ar_' + str(revision)
+            data.append(values[technique][ar_col].values)
+
+        data.sort(key=lambda x: -np.median(x))
+        bp = ax.boxplot(data, whis=[5, 95], showfliers=False, patch_artist=True, widths=1);
+        styleBoxplot(bp, fig, ax, n_revisions)
+        ax.set_ylim(ymin=0, ymax=1)
+
+    fig.savefig('boxplots/u_ar/' + dataset_id + '-uarbp.png')
+    # plt.show()
     return None
 
 

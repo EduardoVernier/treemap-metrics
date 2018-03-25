@@ -22,9 +22,9 @@ acronyms = {
 
 def plot(dataset_ids):
     averages = collect_averages(dataset_ids)
-    brewer = ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a','#ffff99', '#b15928']
+    brewer = ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a','#919114', '#b15928']
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(10,10))
     for technique in sorted(acronyms):
         df = averages[(averages['technique'] == acronyms[technique])]
         colors = [brewer[i] for i in df['label'].values]
@@ -35,19 +35,21 @@ def plot(dataset_ids):
         #plt.scatter(df['inst'], df['ar'], s=60, c=colors, label=labels, edgecolors=None)
 
         for i, point in df.iterrows():
-            x = [x_mean, point['inst']]
-            y = [y_mean, point['ar']]
-            plt.plot(x, y, c=colors[0])
+            x_line = [x_mean, point['inst']]
+            y_line = [y_mean, point['ar']]
+            # Lines
+            # plt.plot(x_line, y_line, c=colors[0], zorder=1)
+            # Labels
+            plt.text(point['inst'], point['ar'], str(int(i/len(acronyms))), color='black', ha='center', va='center', fontsize=7)
+        # Points
+        # plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=2, zorder=10)
 
-        plt.scatter(x_mean, y_mean, s=60, c=colors, label=labels, edgecolors=None)
-
-    plt.xlim(xmin=0)
-    plt.ylim(ymin=0)
+    plt.xlim(xmin=0, xmax=0.35)
+    plt.ylim(ymin=0, ymax=1)
     plt.legend(loc=4)
-    plt.show()
 
-    # fig2 = plt.figure()
-    # averages.plot(x='inst', y='ar', colors='label')
+    fig.savefig("scatter/scatter-l.svg")
+    fig.savefig("scatter/scatter-l.png", dpi=500)
     # plt.show()
 
     return None
