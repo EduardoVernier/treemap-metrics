@@ -4,6 +4,22 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import math
 
+
+acronyms = {
+    'ApproximationTreeMap': 'APP',
+    'HilbertTreeMap': 'HIL',
+    'IncrementalLayoutWithMoves': 'LM4',
+    'IncrementalLayoutWithoutMoves': 'LM0',
+    'MooreTreeMap': 'MOO',
+    'PivotByMiddle': 'PBM',
+    'PivotBySize': 'PBZ',
+    'PivotBySplit': 'PBS',
+    'SliceAndDice': 'SND',
+    'SpiralTreeMap': 'SPI',
+    'SquarifiedTreeMap': 'SQR',
+    'StripTreeMap': 'STR'
+}
+
 def plot_weighted_ar(values, dataset_id):
     nrow = 6
     ncol = 2
@@ -18,7 +34,7 @@ def plot_weighted_ar(values, dataset_id):
 
         statistics_list = []
         # ax.set_title(technique)
-        ax.set_title(technique)
+        ax.set_title(acronyms[technique])
         print(technique)
 
         n_revisions = int(len(values[technique].columns)/2)
@@ -59,7 +75,7 @@ def plot_weighted_ar(values, dataset_id):
         bp = ax.bxp(statistics_list, showfliers=False, patch_artist=True, widths=1);
         styleBoxplot(bp, fig, ax, n_revisions)
         ax.set_ylim(ymin=0, ymax=1)
-        fig.savefig('boxplots/w_ar/' + dataset_id + '-warbp.png')
+    fig.savefig('boxplots/w_ar/' + dataset_id + '-warbp.png')
     # plt.show()
     return None
 
@@ -77,13 +93,13 @@ def plot_unweighted_ar(values, dataset_id):
         technique = technique_ids[i]
 
         # ax.set_title(technique)
-        ax.set_title(technique)
+        ax.set_title(acronyms[technique])
         print(technique)
 
         n_revisions = int(len(values[technique].columns)/2)
         for revision in range(n_revisions):
             ar_col = 'ar_' + str(revision)
-            data.append(values[technique][ar_col].values)
+            data.append(values[technique][ar_col].dropna().values)
 
         data.sort(key=lambda x: -np.median(x))
         bp = ax.boxplot(data, whis=[5, 95], showfliers=False, patch_artist=True, widths=1);
