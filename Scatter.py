@@ -20,7 +20,7 @@ acronyms = {
 }
 
 
-def plot(dataset_ids):
+def plot(dataset_ids, data, labels):
     averages = collect_averages(dataset_ids)
     brewer = ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a','#919114', '#b15928']
 
@@ -37,21 +37,33 @@ def plot(dataset_ids):
         for i, point in df.iterrows():
             x_line = [x_mean, point['inst']]
             y_line = [y_mean, point['ar']]
-            # Lines
-            # plt.plot(x_line, y_line, c=colors[0], zorder=1)
-            # Labels
-            plt.text(point['inst'], point['ar'], str(int(i/len(acronyms))), color='black', ha='center', va='center', fontsize=7)
-        # Points
-        # plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=2, zorder=10)
+
+            if data:
+                plt.plot(x_line, y_line, c=colors[0], zorder=1)
+            if labels:
+                plt.text(point['inst'], point['ar'], str(int(i/len(acronyms))), color='black', ha='center', va='center', fontsize=7)
+
+        if data:
+            plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=2, zorder=10)
 
     plt.xlim(xmin=0, xmax=0.35)
     plt.ylim(ymin=0, ymax=1)
     plt.legend(loc=4)
 
-    fig.savefig("scatter/scatter-l.svg")
-    fig.savefig("scatter/scatter-l.png", dpi=500)
-    # plt.show()
+    if data and labels:
+        print("scatter/scatter-p+l.svg")
+        fig.savefig("scatter/scatter-p+l.svg")
+        fig.savefig("scatter/scatter-p+l.png", dpi=500)
+    elif data and not labels:
+        print("scatter/scatter-p.svg")
+        fig.savefig("scatter/scatter-p.svg")
+        fig.savefig("scatter/scatter-p.png", dpi=500)
+    elif labels and not data:
+        print("scatter/scatter-l.svg")
+        fig.savefig("scatter/scatter-l.svg")
+        fig.savefig("scatter/scatter-l.png", dpi=500)
 
+    # plt.show()
     return None
 
 

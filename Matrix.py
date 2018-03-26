@@ -39,7 +39,7 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    if metric_id == 'ar':
+    if metric_id == 'uar' or metric_id == 'war':
         mat = ax.matshow(matrix, cmap=plt.cm.viridis)
     else:
         mat = ax.matshow(matrix, cmap=plt.cm.viridis_r)  # Invert colormap for instability
@@ -74,7 +74,7 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
 
     fig.colorbar(mat)
     fig.tight_layout()
-    fig.savefig('matrix-'+ metric_id +'.png', dpi=600)
+    fig.savefig('matrices/matrix-'+ metric_id +'.png', dpi=600)
     # plt.show()
 
 
