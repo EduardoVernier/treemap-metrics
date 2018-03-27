@@ -41,8 +41,7 @@ def compute_and_cache_metrics(dataset_id):
             baseline = relative_position_change_wrapper(df_list[revision][['rx', 'ry', 'rw', 'rh']],
                                                         df_list[revision + 1][['bx', 'by', 'bw', 'bh']])
 
-            df_temp = pd.merge(real, baseline, how='outer', left_index=True, right_index=True)
-            df_temp.columns = ['r_' + str(revision), 'b_' + str(revision)]
+            df_temp = pd.DataFrame({'r_' + str(revision): real, 'b_' + str(revision): baseline})
             rpc_df = pd.merge(rpc_df, df_temp, how='outer', left_index=True, right_index=True)
 
         # Save results to disk
@@ -65,7 +64,7 @@ def compute_relative_weight(df, revision):
     return temp_df
 
 #####################################################
-# Corner travel based matric
+# Corner travel based matrix
 def point_distance(x1, y1, x2, y2):
     return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
 
@@ -126,30 +125,31 @@ def relative_position_change_wrapper(df1, df2):
     # Coords from 1st revision and coords from 2nd revision
     df.columns = ['x11', 'y11', 'x12', 'y12', 'x21', 'y21', 'x22', 'y22']
 
-    df = get_relative_score(df)
-    return df[['rpc']]
+    scores = get_relative_score(df)
+    return scores
 
 
 def get_relative_score(df):
-    N = len(df)
-    df['rpc'] = pd.Series(np.zeros(N), index=df.index)
+    m = df.as_matrix()
+    N = len(m)
+    scores = pd.Series(np.zeros(N), index=df.index)
 
     revision_stability = 0
-    for i, r1 in df.iterrows():
+    for i in range(N):
         item_stability = 0
-        for j, r2 in df.iterrows():
+        for j in range(N):
             if i != j:
-                old_percentage = getRelativePositions(r1['x11'], r1['x12'], r1['y11'], r1['y12'],
-                                                      r2['x11'], r2['x12'], r2['y11'], r2['y12'])
-                new_percentage = getRelativePositions(r1['x21'], r1['x22'], r1['y21'], r1['y22'],
-                                                      r2['x21'], r2['x22'], r2['y21'], r2['y22'])
+                old_percentage = getRelativePositions(m[i][0], m[i][2], m[i][1], m[i][3],
+                                                      m[j][0], m[j][2], m[j][1], m[j][3])
+                new_percentage = getRelativePositions(m[i][4], m[i][6], m[i][5], m[i][7],
+                                                      m[j][4], m[j][6], m[j][5], m[j][7])
                 pair_stability = getQuadrantStability(old_percentage, new_percentage)
                 item_stability += pair_stability
                 revision_stability += pair_stability
-        r1['rpc'] = item_stability / (N - 1)
+        scores.iloc[i] = (item_stability / (N - 1))
 
     # revision_stability = revision_stability / (pow(N, 2) - N)
-    return df
+    return scores
 
 
 def getQuadrantStability(percentagesOld, percentagesNew):
