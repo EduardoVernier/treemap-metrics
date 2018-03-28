@@ -146,7 +146,7 @@ def get_relative_score(df):
                 pair_stability = getQuadrantStability(old_percentage, new_percentage)
                 item_stability += pair_stability
                 revision_stability += pair_stability
-        r1['rpc'] = item_stability / (N - 1)
+        r1['rpc'] = item_stability / (N)
 
     # revision_stability = revision_stability / (pow(N, 2) - N)
     return df
