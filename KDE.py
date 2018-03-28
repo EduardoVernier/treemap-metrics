@@ -60,7 +60,7 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         plt.axis('equal')
 
     colormap_mode_str = 'log' if log else 'linear'
-    fig.savefig('kde/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight', dpi=600)
+    fig.savefig('kde/' + base_metric + '/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight', dpi=600)
     # plt.draw()
     # plt.show()
     return None

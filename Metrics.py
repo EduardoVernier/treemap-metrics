@@ -49,13 +49,14 @@ def compute_and_cache_metrics(dataset_id):
             rpc_df.to_csv(rpc_cache_path, index_label='id')
 
         print(' done.')
-
     return None
+
 
 def compute_aspect_ratio(df, revision):
     temp_df = (df[['rw', 'rh']].min(axis=1) / df[['rw', 'rh']].max(axis=1)).to_frame()
     temp_df.columns = ['ar_' + str(revision)]
     return temp_df
+
 
 def compute_relative_weight(df, revision):
     total_area = (df['rx'] + df['rw']).max() * (df['ry'] + df['rh']).max()
@@ -83,6 +84,7 @@ def corner_travel(*args):
                + point_distance(x1 + w1, y1, x2 + w2, y2) \
                + point_distance(x1, y1 + h1, x2, y2 + h2) \
                + point_distance(x1 + w1, y1 + h1, x2 + w2, y2 + h2)
+
 
 def corner_travel_values(df0, df1, bl1, revision):
     # Normalize by 4 * hypotenuse
@@ -146,8 +148,10 @@ def get_relative_score(df):
                 pair_stability = getQuadrantStability(old_percentage, new_percentage)
                 item_stability += pair_stability
                 revision_stability += pair_stability
-        scores.iloc[i] = (item_stability / (N - 1))
-
+        if N > 1:
+            scores.iloc[i] = (item_stability / (N - 1))
+        else:
+            scores.iloc[i] = 0
     # revision_stability = revision_stability / (pow(N, 2) - N)
     return scores
 

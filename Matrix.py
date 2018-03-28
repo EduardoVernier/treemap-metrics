@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import math
 
 import Parser
 
@@ -19,18 +20,34 @@ acronyms = {
     'StripTreeMap': 'STR'
 }
 
+ds = {
+    'Cumulative4Year90HoursRating.csv' : 'Movies C4Y90H',
+    'm-names' : 'Dutch Names',
+    'Cumulative10Years2MonthRating.csv' : 'Movies C10Y2M',
+    'hiv' : 'World Bank HIV',
+    '3Years3MonthRating.csv' : 'Movies 3Y3M',
+    'standard' : 'GitHub standard',
+    'HierarchyCumulative9Year7Month.csv' : 'Movies HC9Y7M',
+    'Hierarchy22Year7Month.csv' : 'Movies H22Y7M',
+    'HierarchyCumulative9Year1Week.csv' : 'Movies HC9Y1W',
+    'Hystrix' : 'GitHub Hystrix'
+}
 
 def plot(dataset_ids):
     # Plot AR matrix
     weighted_ar_matrix, unweighted_ar_matrix, technique_acronyms = make_ar_matrices(dataset_ids)
+    print('war')
     plot_matrix(weighted_ar_matrix, dataset_ids, technique_acronyms, 'war')
+    print('uar')
     plot_matrix(unweighted_ar_matrix, dataset_ids, technique_acronyms, 'uar')
 
     # Plot CT matrix
+    print('ct')
     ct_matrix, technique_acronyms = make_ct_matrix(dataset_ids)
     plot_matrix(ct_matrix, dataset_ids, technique_acronyms, 'ct')
 
     # Plot RPC matrix
+    print('rpc')
     rpc_matrix, technique_acronyms = make_rpc_matrix(dataset_ids)
     plot_matrix(rpc_matrix, dataset_ids, technique_acronyms, 'rpc')
 
@@ -45,7 +62,7 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
         mat = ax.matshow(matrix, cmap=plt.cm.viridis_r)  # Invert colormap for instability
 
     # Ticks, labels and grids
-    ax.set_xticklabels(dataset_ids, rotation='vertical')
+    ax.set_xticklabels([ds[d] for d in dataset_ids], rotation='vertical')
     ax.set_xticks(range(len(dataset_ids)), minor=False)
     ax.set_yticklabels(technique_acronyms)
     ax.set_yticks(range(len(technique_acronyms)), minor=False)
@@ -98,7 +115,10 @@ def make_ct_matrix(dataset_ids):
 
                 diff = df[[r_col, b_col]].max(axis=1) - df[b_col]
                 diff = diff.dropna()
-                diff_mean = diff.mean()
+                if len(diff) > 0:
+                    diff_mean = diff.mean()
+                else:
+                    diff_mean = 0
 
                 technique_means.append(diff_mean)
 
@@ -129,7 +149,10 @@ def make_rpc_matrix(dataset_ids):
 
                 diff = df[[r_col, b_col]].max(axis=1) - df[b_col]
                 diff = diff.dropna()
-                diff_mean = diff.mean()
+                if len(diff) > 0:
+                    diff_mean = diff.mean()
+                else:
+                    diff_mean = 0
 
                 technique_means.append(diff_mean)
 

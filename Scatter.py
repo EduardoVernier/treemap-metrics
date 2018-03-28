@@ -46,7 +46,7 @@ def plot(dataset_ids, draw_data, draw_labels):
         if draw_data:
             plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=2, zorder=10)
 
-    plt.xlim(xmin=0, xmax=0.35)
+    plt.xlim(xmin=0) #xmax=0.35)
     plt.ylim(ymin=0, ymax=1)
     plt.legend(loc=4)
 
