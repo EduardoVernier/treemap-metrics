@@ -2,7 +2,7 @@ import math
 import pandas as pd
 import numpy as np
 import Parser
-
+import os.path
 
 def compute_and_cache_metrics(dataset_id):
     # Returns a dict (one entry for each technique) with lists of dataframes
@@ -13,41 +13,41 @@ def compute_and_cache_metrics(dataset_id):
         # Compute aspect ratios and weight of cells
         ar_cache_path = 'metric_results/' + technique + '-' + dataset_id + '-ar.csv'
         ar_df = pd.DataFrame()
-        for revision, df in enumerate(df_list):
-            weight = compute_relative_weight(df, revision)
-            ar = compute_aspect_ratio(df, revision)
-            ar_df = pd.merge(ar_df, weight, how='outer', left_index=True, right_index=True)
-            ar_df = pd.merge(ar_df, ar, how='outer', left_index=True, right_index=True)
-
+        if not os.path.isfile(ar_cache_path):
+            for revision, df in enumerate(df_list):
+                weight = compute_relative_weight(df, revision)
+                ar = compute_aspect_ratio(df, revision)
+                ar_df = pd.merge(ar_df, weight, how='outer', left_index=True, right_index=True)
+                ar_df = pd.merge(ar_df, ar, how='outer', left_index=True, right_index=True)
+            ar_df.to_csv(ar_cache_path, index_label='id')
 
         # Compute Corner Travel (real and baseline)
         ct_cache_path = 'metric_results/' + technique + '-' + dataset_id + '-ct.csv'
         ct_df = pd.DataFrame()
-        for revision in range(len(df_list) - 1):
-            r0 = df_list[revision][['rx', 'ry', 'rw', 'rh']].dropna(axis=0, subset=['rx'])
-            r1 = df_list[revision + 1][['rx', 'ry', 'rw', 'rh']].dropna(axis=0, subset=['rx'])
-            b1 = df_list[revision + 1][['bx', 'by', 'bw', 'bh']].dropna(axis=0, subset=['bx'])
-            ct = corner_travel_values(r0, r1, b1, revision)
-            ct_df = pd.merge(ct_df, ct, how='outer', left_index=True, right_index=True)
-
+        if not os.path.isfile(ct_cache_path):
+            for revision in range(len(df_list) - 1):
+                r0 = df_list[revision][['rx', 'ry', 'rw', 'rh']].dropna(axis=0, subset=['rx'])
+                r1 = df_list[revision + 1][['rx', 'ry', 'rw', 'rh']].dropna(axis=0, subset=['rx'])
+                b1 = df_list[revision + 1][['bx', 'by', 'bw', 'bh']].dropna(axis=0, subset=['bx'])
+                ct = corner_travel_values(r0, r1, b1, revision)
+                ct_df = pd.merge(ct_df, ct, how='outer', left_index=True, right_index=True)
+            ct_df.to_csv(ct_cache_path, index_label='id')
 
         # Compute Relative Position Change metric
         rpc_cache_path = 'metric_results/' + technique + '-' + dataset_id + '-rpc.csv'
         rpc_df = pd.DataFrame()
-        for revision in range(len(df_list) - 1):
-            real = relative_position_change_wrapper(df_list[revision][['rx', 'ry', 'rw', 'rh']],
-                                                    df_list[revision + 1][['rx', 'ry', 'rw', 'rh']])
+        if not os.path.isfile(rpc_cache_path):
+            for revision in range(len(df_list) - 1):
+                real = relative_position_change_wrapper(df_list[revision][['rx', 'ry', 'rw', 'rh']],
+                                                        df_list[revision + 1][['rx', 'ry', 'rw', 'rh']])
 
-            baseline = relative_position_change_wrapper(df_list[revision][['rx', 'ry', 'rw', 'rh']],
-                                                        df_list[revision + 1][['bx', 'by', 'bw', 'bh']])
+                baseline = relative_position_change_wrapper(df_list[revision][['rx', 'ry', 'rw', 'rh']],
+                                                            df_list[revision + 1][['bx', 'by', 'bw', 'bh']])
 
-            df_temp = pd.DataFrame({'r_' + str(revision): real, 'b_' + str(revision): baseline})
-            rpc_df = pd.merge(rpc_df, df_temp, how='outer', left_index=True, right_index=True)
+                df_temp = pd.DataFrame({'r_' + str(revision): real, 'b_' + str(revision): baseline})
+                rpc_df = pd.merge(rpc_df, df_temp, how='outer', left_index=True, right_index=True)
+            rpc_df.to_csv(rpc_cache_path, index_label='id')
 
-        # Save results to disk
-        ar_df.to_csv(ar_cache_path, index_label='id')
-        ct_df.to_csv(ct_cache_path, index_label='id')
-        rpc_df.to_csv(rpc_cache_path, index_label='id')
         print(' done.')
 
     return None
