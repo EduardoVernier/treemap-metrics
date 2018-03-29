@@ -45,6 +45,7 @@ def compute_and_cache_metrics(dataset_id):
                                                             df_list[revision + 1][['bx', 'by', 'bw', 'bh']])
 
                 df_temp = pd.DataFrame({'r_' + str(revision): real, 'b_' + str(revision): baseline})
+                df_temp.sort_index(axis=1, ascending=False, inplace=True)
                 rpc_df = pd.merge(rpc_df, df_temp, how='outer', left_index=True, right_index=True)
             rpc_df.to_csv(rpc_cache_path, index_label='id')
 
