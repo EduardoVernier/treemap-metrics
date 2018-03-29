@@ -126,7 +126,7 @@ def plot_instability(values, dataset_id, metric_id):
     for i, ax in enumerate(fig.axes):
         technique = technique_ids[i]
         # ax.set_title(technique)
-        ax.set_title(technique)
+        ax.set_title(acronyms[technique])
 
         print(technique)
 
