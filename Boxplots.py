@@ -20,6 +20,7 @@ acronyms = {
     'StripTreeMap': 'STR'
 }
 
+
 def plot_weighted_ar(values, dataset_id):
     nrow = 6
     ncol = 2
@@ -69,7 +70,8 @@ def plot_weighted_ar(values, dataset_id):
             item["whislo"] = f
             item["whishi"] = nf
             item["fliers"] = []
-            statistics_list.append(item)
+            if median != math.nan:
+                statistics_list.append(item)
 
         statistics_list.sort(key=lambda x: -x['med'])
         bp = ax.bxp(statistics_list, showfliers=False, patch_artist=True, widths=1);
@@ -99,11 +101,13 @@ def plot_unweighted_ar(values, dataset_id):
         n_revisions = int(len(values[technique].columns)/2)
         for revision in range(n_revisions):
             ar_col = 'ar_' + str(revision)
-            data.append(values[technique][ar_col].dropna().values)
+            ar = values[technique][ar_col].dropna().values
+            if len(ar) > 0:
+                data.append(ar)
 
         data.sort(key=lambda x: -np.median(x))
         bp = ax.boxplot(data, whis=[5, 95], showfliers=False, patch_artist=True, widths=1);
-        styleBoxplot(bp, fig, ax, n_revisions)
+        styleBoxplot(bp, fig, ax, len(data))
         ax.set_ylim(ymin=0, ymax=1)
 
     fig.savefig('boxplots/u_ar/' + dataset_id + '-uarbp.png')
@@ -128,14 +132,15 @@ def plot_instability(values, dataset_id, metric_id):
 
         data = []
         for revision in range(int(len(values[technique].columns)/2)):
-            df = values[technique]
+            # df = values[technique]
             r_col = 'r_' + str(revision)
             b_col = 'b_' + str(revision)
 
             diff = values[technique][[r_col, b_col]].max(axis=1) - values[technique][b_col]
-            diff = diff.dropna()
+            diff_values = diff.dropna().values
             # display(df)
-            data.append(diff.values)
+            if len(diff_values) > 0:
+                data.append(diff_values)
 
         data.sort(key=lambda x: -np.median(x))
         bp = ax.boxplot(data, whis=[5, 95], showfliers=False, patch_artist=True, widths=1);
