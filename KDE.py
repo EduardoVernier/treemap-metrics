@@ -21,8 +21,8 @@ acronyms = {
     'StripTreeMap': 'STR'
 }
 
-def plot_real_vs_baseline(values, dataset_id, base_metric, log):
 
+def plot_real_vs_baseline(values, dataset_id, base_metric, log):
     nrow = 6
     ncol = 2
     fig = plt.figure(1, (8, 14))
@@ -38,11 +38,16 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         print(technique_id)
         ax = grid[i]
         #ax.set_title(technique_id)
-        full_df = values[technique_id]
-        real_series = full_df.iloc[:, ::2].stack().values.clip(0,1)
-        baseline_series = full_df.iloc[:, 1::2].stack().values.clip(0,1)
-        baseline_series += np.random.normal(0, .001, baseline_series.shape) # Adding a little bit of noise to the baseline
 
+        full_df = values[technique_id]
+        if full_df.columns[0] == 'r_0':
+            real_series = full_df.iloc[:, ::2].stack().values.clip(0,1)
+            baseline_series = full_df.iloc[:, 1::2].stack().values.clip(0,1)
+        else:
+            real_series = full_df.iloc[:, 1::2].stack().values.clip(0, 1)
+            baseline_series = full_df.iloc[:, ::2].stack().values.clip(0, 1)
+
+        baseline_series += np.random.normal(0, .001, baseline_series.shape) # Adding a little bit of noise to the baseline
         # Plot all points in black with alpha
         ax.scatter(real_series, baseline_series, color='k', s=2, alpha=.1)
 

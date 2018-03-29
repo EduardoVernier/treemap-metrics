@@ -51,16 +51,16 @@ def plot(dataset_ids, draw_data, draw_labels):
     plt.legend(loc=4)
 
     if draw_data and draw_labels:
-        print("scatter/scatter-p+l.svg")
-        fig.savefig("scatter/scatter-p+l.svg")
+        print("scatter/scatter-p+l.png")
+        # fig.savefig("scatter/scatter-p+l.svg")
         fig.savefig("scatter/scatter-p+l.png", dpi=500)
     elif draw_data and not draw_labels:
-        print("scatter/scatter-p.svg")
-        fig.savefig("scatter/scatter-p.svg")
+        print("scatter/scatter-p.png")
+        # fig.savefig("scatter/scatter-p.svg")
         fig.savefig("scatter/scatter-p.png", dpi=500)
     elif draw_labels and not draw_data:
-        print("scatter/scatter-l.svg")
-        fig.savefig("scatter/scatter-l.svg")
+        print("scatter/scatter-l.png")
+        # fig.savefig("scatter/scatter-l.svg")
         fig.savefig("scatter/scatter-l.png", dpi=500)
 
     # plt.show()
@@ -76,7 +76,6 @@ def collect_averages(dataset_ids):
         technique_list = sorted(ar_dict)
         for i, technique in enumerate(technique_list):
             results.append([dataset_id, acronyms[technique], i, ar_dict[technique], inst_dict[technique]])
-
 
     df = pd.DataFrame(results, columns=['dataset', 'technique', 'label', 'ar', 'inst'])
     return df
