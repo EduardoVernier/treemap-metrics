@@ -129,8 +129,8 @@ def plot_instability(values, dataset_id, metric_id):
         data = []
         for revision in range(int(len(values[technique].columns)/2)):
             df = values[technique]
-            r_col = df.columns[2 * revision]
-            b_col = df.columns[2 * revision + 1]
+            r_col = 'r_' + str(revision)
+            b_col = 'b_' + str(revision)
 
             diff = values[technique][[r_col, b_col]].max(axis=1) - values[technique][b_col]
             diff = diff.dropna()

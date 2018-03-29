@@ -21,16 +21,17 @@ acronyms = {
 }
 
 ds = {
-    'Cumulative4Year90HoursRating.csv' : 'Movies C4Y90H',
-    'm-names' : 'Dutch Names',
-    'Cumulative10Years2MonthRating.csv' : 'Movies C10Y2M',
-    'hiv' : 'World Bank HIV',
-    '3Years3MonthRating.csv' : 'Movies 3Y3M',
-    'standard' : 'GitHub standard',
-    'HierarchyCumulative9Year7Month.csv' : 'Movies HC9Y7M',
-    'Hierarchy22Year7Month.csv' : 'Movies H22Y7M',
-    'HierarchyCumulative9Year1Week.csv' : 'Movies HC9Y1W',
-    'Hystrix' : 'GitHub Hystrix'
+    'Cumulative4Year90HoursRating.csv': 'Movies C4Y90H',
+    'm-names': 'Dutch Names',
+    '15Months1DayRating.csv': '15M1D',
+    'Cumulative10Years2MonthRating.csv': 'Movies C10Y2M',
+    'hiv': 'World Bank HIV',
+    '3Years3MonthRating.csv': 'Movies 3Y3M',
+    'standard': 'GitHub standard',
+    'HierarchyCumulative9Year7Month.csv': 'Movies HC9Y7M',
+    'Hierarchy22Year7Month.csv': 'Movies H22Y7M',
+    'HierarchyCumulative9Year1Week.csv': 'Movies HC9Y1W',
+    'Hystrix': 'GitHub Hystrix'
 }
 
 def plot(dataset_ids):
@@ -110,8 +111,8 @@ def make_ct_matrix(dataset_ids):
             technique_means = []
             for revision in range(int(len(ct_df[technique_id].columns) / 2)):
                 df = ct_df[technique_id]
-                r_col = df.columns[2 * revision]
-                b_col = df.columns[2 * revision + 1]
+                r_col = 'r_' + str(revision)
+                b_col = 'b_' + str(revision)
 
                 diff = df[[r_col, b_col]].max(axis=1) - df[b_col]
                 diff = diff.dropna()
@@ -144,8 +145,8 @@ def make_rpc_matrix(dataset_ids):
             technique_means = []
             for revision in range(int(len(rpc_df[technique_id].columns) / 2)):
                 df = rpc_df[technique_id]
-                r_col = df.columns[2 * revision]
-                b_col = df.columns[2 * revision + 1]
+                r_col = 'r_' + str(revision)
+                b_col = 'b_' + str(revision)
 
                 diff = df[[r_col, b_col]].max(axis=1) - df[b_col]
                 diff = diff.dropna()
@@ -180,9 +181,8 @@ def make_ar_matrices(dataset_ids):
             weighted_technique_means = []
             unweighted_technique_means = []
             for revision in range(int(len(ar_df[technique_id].columns) / 2)):
-                df = ar_df[technique_id]
-                w_col = df.columns[2 * revision]
-                ar_col = df.columns[2 * revision + 1]
+                w_col = 'w_' + str(revision)
+                ar_col = 'ar_' + str(revision)
 
                 u_avg = ar_df[technique_id][ar_col].mean(axis=0)
                 w_avg = np.average(ar_df[technique_id][ar_col].dropna(), weights=ar_df[technique_id][w_col].dropna())

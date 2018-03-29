@@ -92,13 +92,13 @@ def instability_average(dataset_id):
     for i, technique_id in enumerate(technique_list):
         technique_means = []
         for revision in range(int(len(rpc_df[technique_id].columns) / 2)):
-            r_col = rpc_df[technique_id].columns[2 * revision]
-            b_col = rpc_df[technique_id].columns[2 * revision + 1]
+            r_col = 'r_' + str(revision)
+            b_col = 'b_' + str(revision)
             diff = rpc_df[technique_id][[r_col, b_col]].max(axis=1) - rpc_df[technique_id][b_col]
             ct_mean = diff.dropna().mean()
 
-            r_col = ct_df[technique_id].columns[2 * revision]
-            b_col = ct_df[technique_id].columns[2 * revision + 1]
+            r_col = 'r_' + str(revision)
+            b_col = 'b_' + str(revision)
             diff = ct_df[technique_id][[r_col, b_col]].max(axis=1) - ct_df[technique_id][b_col]
             rpc_mean = diff.dropna().mean()
 
@@ -117,9 +117,9 @@ def ar_average(dataset_id):
     for i, technique_id in enumerate(technique_list):
         technique_means = []
         for revision in range(int(len(ar_df[technique_id].columns) / 2)):
-            df = ar_df[technique_id]
-            w_col = df.columns[2 * revision]
-            ar_col = df.columns[2 * revision + 1]
+            # df = ar_df[technique_id]
+            w_col = 'w_' + str(revision)
+            ar_col = 'ar_' + str(revision)
 
             u_avg = ar_df[technique_id][ar_col].mean(axis=0)
             w_avg = np.average(ar_df[technique_id][ar_col].dropna(), weights=ar_df[technique_id][w_col].dropna())
