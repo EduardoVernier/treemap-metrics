@@ -26,7 +26,7 @@ def plot(dataset_ids, draw_data, draw_labels):
 
     fig = plt.figure(figsize=(10,10))
     for technique in sorted(acronyms):
-        df = averages[(averages['technique'] == acronyms[technique])]
+        df = averages[(averages['technique'] == acronyms[technique])].dropna(axis=0)
         colors = [brewer[i] for i in df['label'].values]
         labels = df['technique'].iloc[0]
 
