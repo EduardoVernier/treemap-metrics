@@ -3,14 +3,18 @@ HierarchyLot5040MonthsStart1153318400End1425184000NZ4minTotal10000minVal1000Addi
 HierarchyLot5376MonthsStart789652004End1427784002NZ16minTotal10000minVal4000Additivefalse.csv
 hiv.data
 Hystrix.data
-m-names.data
-poly.data
+m-names.data"
+for d in $datasets; do time python3 Main.py cache-metrics $d; done
+
+
+datasets="poly.data
 single10080ACTIONADVENTUREMonthsStart1089652004End1427784002NZ10minTotal100minVal10Additivefalse.csv
 single1536ACTIONADVENTUREMonthsStart1338963809End1427784002NZ1minTotal20minVal1Additivefalse.csv
 single24ACTIONADVENTUREMonthsStart1398916690End1427784002NZ1minTotal100minVal1Additivefalse.csv
 single672ACTIONADVENTUREMonthsStart1089652004End1427784002NZ40minTotal100minVal40Additivetrue.csv
 single96ACTIONADVENTUREMonthsStart1289652004End1427784002NZ256minTotal20minVal4Additivetrue.csv
 standard.data"
+for d in $datasets; do time python3 Main.py cache-metrics $d; done
 
 
 datasets="bdb
