@@ -4,22 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import math
 
-
-acronyms = {
-    'ApproximationTreeMap': 'APP',
-    'HilbertTreeMap': 'HIL',
-    'IncrementalLayoutWithMoves': 'LM4',
-    'IncrementalLayoutWithoutMoves': 'LM0',
-    'MooreTreeMap': 'MOO',
-    'PivotByMiddle': 'PBM',
-    'PivotBySize': 'PBZ',
-    'PivotBySplit': 'PBS',
-    'SliceAndDice': 'SND',
-    'SpiralTreeMap': 'SPI',
-    'SquarifiedTreeMap': 'SQR',
-    'StripTreeMap': 'STR'
-}
-
+import Globals
 
 def plot_weighted_ar(values, dataset_id):
     nrow = 6
@@ -35,7 +20,7 @@ def plot_weighted_ar(values, dataset_id):
 
         statistics_list = []
         # ax.set_title(technique)
-        ax.set_title(acronyms[technique])
+        ax.set_title(Globals.acronyms[technique])
         print(technique)
 
         n_revisions = int(len(values[technique].columns)/2)
@@ -95,7 +80,7 @@ def plot_unweighted_ar(values, dataset_id):
         technique = technique_ids[i]
 
         # ax.set_title(technique)
-        ax.set_title(acronyms[technique])
+        ax.set_title(Globals.acronyms[technique])
         print(technique)
 
         n_revisions = int(len(values[technique].columns)/2)
@@ -126,7 +111,7 @@ def plot_instability(values, dataset_id, metric_id):
     for i, ax in enumerate(fig.axes):
         technique = technique_ids[i]
         # ax.set_title(technique)
-        ax.set_title(acronyms[technique])
+        ax.set_title(Globals.acronyms[technique])
 
         print(technique)
 

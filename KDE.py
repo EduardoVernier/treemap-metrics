@@ -6,20 +6,7 @@ from matplotlib import cm
 from scipy import stats
 from mpl_toolkits.axes_grid1 import ImageGrid
 
-acronyms = {
-    'ApproximationTreeMap': 'APP',
-    'HilbertTreeMap': 'HIL',
-    'IncrementalLayoutWithMoves': 'LM4',
-    'IncrementalLayoutWithoutMoves': 'LM0',
-    'MooreTreeMap': 'MOO',
-    'PivotByMiddle': 'PBM',
-    'PivotBySize': 'PBZ',
-    'PivotBySplit': 'PBS',
-    'SliceAndDice': 'SND',
-    'SpiralTreeMap': 'SPI',
-    'SquarifiedTreeMap': 'SQR',
-    'StripTreeMap': 'STR'
-}
+import Globals
 
 
 def plot_real_vs_baseline(values, dataset_id, base_metric, log):
@@ -58,7 +45,7 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         dens_pt = dens(matrix)
         colours = make_colors(dens_pt, 'inferno', log)
         ax.scatter(matrix[0], matrix[1], color=colours, s=2, alpha=.25)
-        ax.text(.97, .9, acronyms[technique_id], horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
+        ax.text(.97, .9, Globals.acronyms[technique_id], horizontalalignment='right', verticalalignment='center', transform=ax.transAxes)
 
         ax.set_xlim(xmin=0, xmax=1)
         ax.set_ylim(ymin=0, ymax=.3)

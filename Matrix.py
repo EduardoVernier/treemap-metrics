@@ -4,35 +4,8 @@ import pandas as pd
 import math
 
 import Parser
+import Globals
 
-acronyms = {
-    'ApproximationTreeMap': 'APP',
-    'HilbertTreeMap': 'HIL',
-    'IncrementalLayoutWithMoves': 'LM4',
-    'IncrementalLayoutWithoutMoves': 'LM0',
-    'MooreTreeMap': 'MOO',
-    'PivotByMiddle': 'PBM',
-    'PivotBySize': 'PBZ',
-    'PivotBySplit': 'PBS',
-    'SliceAndDice': 'SND',
-    'SpiralTreeMap': 'SPI',
-    'SquarifiedTreeMap': 'SQR',
-    'StripTreeMap': 'STR'
-}
-
-ds = {
-    'Cumulative4Year90HoursRating.csv': 'Movies C4Y90H',
-    'm-names': 'Dutch Names',
-    '15Months1DayRating.csv': '15M1D',
-    'Cumulative10Years2MonthRating.csv': 'Movies C10Y2M',
-    'hiv': 'World Bank HIV',
-    '3Years3MonthRating.csv': 'Movies 3Y3M',
-    'standard': 'GitHub standard',
-    'HierarchyCumulative9Year7Month.csv': 'Movies HC9Y7M',
-    'Hierarchy22Year7Month.csv': 'Movies H22Y7M',
-    'HierarchyCumulative9Year1Week.csv': 'Movies HC9Y1W',
-    'Hystrix': 'GitHub Hystrix'
-}
 
 def plot(dataset_ids):
     # Plot AR matrix
@@ -105,7 +78,7 @@ def make_ct_matrix(dataset_ids):
         dataset_means = np.array([])
         technique_list = sorted(ct_df)
         if len(technique_ids) == 0:
-            technique_acronyms = [acronyms[d] for d in technique_list]
+            technique_acronyms = [Globals.acronyms[d] for d in technique_list]
 
         for i, technique_id in enumerate(technique_list):
             technique_means = []
@@ -139,7 +112,7 @@ def make_rpc_matrix(dataset_ids):
         dataset_means = np.array([])
         technique_list = sorted(rpc_df)
         if len(technique_ids) == 0:
-            technique_acronyms = [acronyms[d] for d in technique_list]
+            technique_acronyms = [Globals.acronyms[d] for d in technique_list]
 
         for i, technique_id in enumerate(technique_list):
             technique_means = []
@@ -175,7 +148,7 @@ def make_ar_matrices(dataset_ids):
         unweighted_dataset_means = np.array([])
         technique_list = sorted(ar_df)
         if len(technique_ids) == 0:
-            technique_acronyms = [acronyms[d] for d in technique_list]
+            technique_acronyms = [Globals.acronyms[d] for d in technique_list]
 
         for i, technique_id in enumerate(technique_list):
             weighted_technique_means = []

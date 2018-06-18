@@ -2,8 +2,9 @@ import os
 import re
 import pandas as pd
 
-base_path = '/home/eduardo/Desktop/baseline-metric/rectangles/'
+base_path = '/home/eduardo/Desktop/tvcg_rectangles/'
 metric_path = '/home/eduardo/PycharmProjects/treemap-metrics/metric_results/'
+
 
 def parse_dataset(dataset_id):
     # Separate baseline dirs from real dirs

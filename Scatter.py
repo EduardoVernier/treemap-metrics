@@ -3,21 +3,7 @@ import numpy as np
 import pandas as pd
 
 import Parser
-
-acronyms = {
-    'ApproximationTreeMap': 'APP',
-    'HilbertTreeMap': 'HIL',
-    'IncrementalLayoutWithMoves': 'LM4',
-    'IncrementalLayoutWithoutMoves': 'LM0',
-    'MooreTreeMap': 'MOO',
-    'PivotByMiddle': 'PBM',
-    'PivotBySize': 'PBZ',
-    'PivotBySplit': 'PBS',
-    'SliceAndDice': 'SND',
-    'SpiralTreeMap': 'SPI',
-    'SquarifiedTreeMap': 'SQR',
-    'StripTreeMap': 'STR'
-}
+import Globals
 
 
 def plot(dataset_ids, draw_data, draw_labels):
@@ -25,8 +11,8 @@ def plot(dataset_ids, draw_data, draw_labels):
     brewer = ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a','#919114', '#b15928']
 
     fig = plt.figure(figsize=(10,10))
-    for technique in sorted(acronyms):
-        df = averages[(averages['technique'] == acronyms[technique])].dropna(axis=0)
+    for technique in sorted(Globals.acronyms):
+        df = averages[(averages['technique'] == Globals.acronyms[technique])].dropna(axis=0)
         colors = [brewer[i] for i in df['label'].values]
         labels = df['technique'].iloc[0]
 
@@ -41,7 +27,7 @@ def plot(dataset_ids, draw_data, draw_labels):
             if draw_data:
                 plt.plot(x_line, y_line, c=colors[0], zorder=1)
             if draw_labels:
-                plt.text(point['inst'], point['ar'], str(int(i/len(acronyms))), color='black', ha='center', va='center', fontsize=7)
+                plt.text(point['inst'], point['ar'], str(int(i/len(Globals.acronyms))), color='black', ha='center', va='center', fontsize=7)
 
         if draw_data:
             plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=2, zorder=10)
@@ -75,7 +61,7 @@ def collect_averages(dataset_ids):
 
         technique_list = sorted(ar_dict)
         for i, technique in enumerate(technique_list):
-            results.append([dataset_id, acronyms[technique], i, ar_dict[technique], inst_dict[technique]])
+            results.append([dataset_id, Globals.acronyms[technique], i, ar_dict[technique], inst_dict[technique]])
 
     df = pd.DataFrame(results, columns=['dataset', 'technique', 'label', 'ar', 'inst'])
     return df
