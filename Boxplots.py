@@ -10,7 +10,7 @@ import math
 import Globals
 
 def plot_weighted_ar(values, dataset_id):
-    nrow = 6
+    nrow = 7
     ncol = 2
     fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
     # fig.suptitle('Aspect Ratios', fontsize=14)
@@ -70,7 +70,7 @@ def plot_weighted_ar(values, dataset_id):
     return None
 
 def plot_unweighted_ar(values, dataset_id):
-    nrow = 6
+    nrow = 7
     ncol = 2
     fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
     # fig.suptitle('Aspect Ratios', fontsize=14)
@@ -104,7 +104,7 @@ def plot_unweighted_ar(values, dataset_id):
 
 
 def plot_instability(values, dataset_id, metric_id):
-    nrow = 6
+    nrow = 7
     ncol = 2
     fig, axs = plt.subplots(nrow, ncol, sharex=True, sharey=True, figsize=(10, 22))
     # fig.delaxes(axs[5, 1])

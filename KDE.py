@@ -13,7 +13,7 @@ import Globals
 
 
 def plot_real_vs_baseline(values, dataset_id, base_metric, log):
-    nrow = 6
+    nrow = 7
     ncol = 2
     fig = plt.figure(1, (8, 14))
     fig.subplots_adjust(left=0.08, right=0.99, top=.99, bottom=.01)
