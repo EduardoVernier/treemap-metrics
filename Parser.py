@@ -2,7 +2,7 @@ import os
 import re
 import pandas as pd
 
-base_path = '/home/eduardo/Desktop/tvcg_rectangles/'
+base_path = '/home/eduardo/Desktop/outputNewClassifications/'
 metric_path = '/home/eduardo/PycharmProjects/treemap-metrics/metric_results/'
 
 

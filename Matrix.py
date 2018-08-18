@@ -2,15 +2,19 @@ import matplotlib
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+rcParams['font.family'] = 'monospace'
 import numpy as np
 import pandas as pd
 import math
+import os
 
 import Parser
 import Globals
 
 
 def plot(dataset_ids):
+    os.makedirs('matrices', exist_ok=True)
     # Plot AR matrix
     weighted_ar_matrix, unweighted_ar_matrix, technique_acronyms = make_ar_matrices(dataset_ids)
     print('war')
@@ -39,7 +43,7 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
         mat = ax.matshow(matrix, cmap=plt.cm.viridis_r)  # Invert colormap for instability
 
     # Ticks, labels and grids
-    ax.set_xticklabels([ds[d] for d in dataset_ids], rotation='vertical')
+    ax.set_xticklabels(dataset_ids, rotation='vertical')
     ax.set_xticks(range(len(dataset_ids)), minor=False)
     ax.set_yticklabels(technique_acronyms)
     ax.set_yticks(range(len(technique_acronyms)), minor=False)
@@ -59,12 +63,12 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     x_positions = np.linspace(start=x_start-0.5, stop=x_end-0.5, num=len(dataset_ids), endpoint=False)
     y_positions = np.linspace(start=y_start-0.5, stop=y_end-0.5, num=len(technique_acronyms), endpoint=False)
 
-    for y_index, y in enumerate(y_positions):
-        for x_index, x in enumerate(x_positions):
-            label = "{0:.3f}".format(matrix[y_index, x_index]).lstrip('0')
-            text_x = x + jump_x
-            text_y = y + jump_y
-            ax.text(text_x, text_y, label, color='black', ha='center', va='center', fontsize=9)
+    # for y_index, y in enumerate(y_positions):
+    #     for x_index, x in enumerate(x_positions):
+    #         label = "{0:.3f}".format(matrix[y_index, x_index]).lstrip('0')
+    #         text_x = x + jump_x
+    #         text_y = y + jump_y
+    #         ax.text(text_x, text_y, label, color='black', ha='center', va='center', fontsize=9)
 
     fig.colorbar(mat)
     fig.tight_layout()

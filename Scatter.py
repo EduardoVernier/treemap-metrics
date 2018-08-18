@@ -2,16 +2,20 @@ import matplotlib
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+rcParams['font.family'] = 'monospace'
 import numpy as np
 import pandas as pd
+import os
 
 import Parser
 import Globals
 
-
 def plot(dataset_ids, draw_data, draw_labels):
     averages = collect_averages(dataset_ids)
-    brewer = ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a','#919114', '#b15928']
+    brewer = ['#a6cee3', '#1f78b4', '#b2df8a', '#33a02c', '#fb9a99',
+              '#e31a1c', '#fdbf6f', '#ff7f00', '#cab2d6', '#6a3d9a',
+              '#919114', '#b15928', '#3cb29a']
 
     fig = plt.figure(figsize=(10,10))
     for technique in sorted(Globals.acronyms):
@@ -39,6 +43,7 @@ def plot(dataset_ids, draw_data, draw_labels):
     plt.ylim(ymin=0, ymax=1)
     plt.legend(loc=4)
 
+    os.makedirs('scatter', exist_ok=True)
     if draw_data and draw_labels:
         print("scatter/scatter-p+l.png")
         # fig.savefig("scatter/scatter-p+l.svg")
