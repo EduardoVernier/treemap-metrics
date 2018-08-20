@@ -6,6 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import math
+import os
 
 import Globals
 
@@ -18,13 +19,14 @@ def plot_weighted_ar(values, dataset_id):
     # fig.subplots_adjust(top=0.95)
 
     technique_ids = sorted(values)
-    for i, ax in enumerate(fig.axes):
+    for i in range(len(technique_ids)):
+        ax = fig.axes[i]
         technique = technique_ids[i]
 
         statistics_list = []
         # ax.set_title(technique)
         ax.set_title(Globals.acronyms[technique])
-        print(technique)
+        print('.', end='')
 
         n_revisions = int(len(values[technique].columns)/2)
         for revision in range(n_revisions):
@@ -65,6 +67,7 @@ def plot_weighted_ar(values, dataset_id):
         bp = ax.bxp(statistics_list, showfliers=False, patch_artist=True, widths=1);
         styleBoxplot(bp, fig, ax, n_revisions)
         ax.set_ylim(ymin=0, ymax=1)
+    os.makedirs('boxplots/w_ar/', exist_ok=True)
     fig.savefig('boxplots/w_ar/' + dataset_id + '-warbp.png')
     # plt.show()
     return None
@@ -78,13 +81,14 @@ def plot_unweighted_ar(values, dataset_id):
     # fig.subplots_adjust(top=0.95)
 
     technique_ids = sorted(values)
-    for i, ax in enumerate(fig.axes):
+    for i in range(len(technique_ids)):
+        ax = fig.axes[i]
         data = []
         technique = technique_ids[i]
 
         # ax.set_title(technique)
         ax.set_title(Globals.acronyms[technique])
-        print(technique)
+        print('.', end='')
 
         n_revisions = int(len(values[technique].columns)/2)
         for revision in range(n_revisions):
@@ -98,6 +102,7 @@ def plot_unweighted_ar(values, dataset_id):
         styleBoxplot(bp, fig, ax, len(data))
         ax.set_ylim(ymin=0, ymax=1)
 
+    os.makedirs('boxplots/u_ar/', exist_ok=True)
     fig.savefig('boxplots/u_ar/' + dataset_id + '-uarbp.png')
     # plt.show()
     return None
@@ -111,12 +116,13 @@ def plot_instability(values, dataset_id, metric_id):
     fig.tight_layout()
 
     technique_ids = sorted(values)
-    for i, ax in enumerate(fig.axes):
+    for i in range(len(technique_ids)):
+        ax = fig.axes[i]
         technique = technique_ids[i]
         # ax.set_title(technique)
         ax.set_title(Globals.acronyms[technique])
 
-        print(technique)
+        print('.', end='')
 
         data = []
         for revision in range(int(len(values[technique].columns)/2)):
@@ -138,6 +144,7 @@ def plot_instability(values, dataset_id, metric_id):
         ax.set_yticklabels([0, .25, .5, .75, 1], fontdict=None, minor=False)
         styleBoxplot(bp, fig, ax, len(data))
 
+    os.makedirs('boxplots/' + metric_id + '/', exist_ok=True)
     fig.savefig('boxplots/' + metric_id + '/' + dataset_id + '-' + metric_id + 'bp.png')
     return None
 

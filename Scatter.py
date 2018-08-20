@@ -7,6 +7,7 @@ rcParams['font.family'] = 'monospace'
 import numpy as np
 import pandas as pd
 import os
+from adjustText import adjust_text
 
 import Parser
 import Globals
@@ -18,6 +19,7 @@ def plot(dataset_ids, draw_data, draw_labels):
               '#919114', '#b15928', '#3cb29a']
 
     fig = plt.figure(figsize=(10,10))
+    texts = []
     for technique in sorted(Globals.acronyms):
         df = averages[(averages['technique'] == Globals.acronyms[technique])].dropna(axis=0)
         colors = [brewer[i] for i in df['label'].values]
@@ -32,16 +34,22 @@ def plot(dataset_ids, draw_data, draw_labels):
             y_line = [y_mean, point['ar']]
 
             if draw_data:
-                plt.plot(x_line, y_line, c=colors[0], zorder=1)
+                plt.plot(x_line, y_line, c=colors[0], zorder=1, alpha=0.3)
             if draw_labels:
                 plt.text(point['inst'], point['ar'], str(int(i/len(Globals.acronyms))), color='black', ha='center', va='center', fontsize=7)
 
         if draw_data:
-            plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=2, zorder=10)
+            plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=1, zorder=10)
+
+        t = plt.text(x_mean, y_mean, Globals.acronyms[technique], ha='center', va='center', zorder=11,
+                     fontsize=14, fontweight='bold')
+        texts.append(t)
+    adjust_text(texts, force_points=0.2, force_text=0.2, expand_points=(1,1), expand_text=(1,1))
 
     plt.xlim(xmin=0) #xmax=0.35)
     plt.ylim(ymin=0, ymax=1)
-    plt.legend(loc=4)
+    # plt.legend(loc=4)
+
 
     os.makedirs('scatter', exist_ok=True)
     if draw_data and draw_labels:

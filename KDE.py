@@ -8,6 +8,7 @@ from matplotlib.colors import LogNorm, Normalize
 from matplotlib import cm
 from scipy import stats
 from mpl_toolkits.axes_grid1 import ImageGrid
+import os
 
 import Globals
 
@@ -25,7 +26,7 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
 
     technique_list = sorted(values)
     for i, technique_id in enumerate(technique_list):
-        print(technique_id)
+        # print(technique_id)
         ax = grid[i]
         #ax.set_title(technique_id)
 
@@ -55,6 +56,7 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         plt.axis('equal')
 
     colormap_mode_str = 'log' if log else 'linear'
+    os.makedirs('kde/' + base_metric + '/', exist_ok=True)
     fig.savefig('kde/' + base_metric + '/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight', dpi=600)
     # plt.draw()
     # plt.show()

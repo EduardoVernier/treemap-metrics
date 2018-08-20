@@ -1,8 +1,7 @@
-baseball-pitching-BK.data
 DutchNames
-earthquake-count-per-lat-long.data
 gh-FlycoTabLayout-m.data
 gh-pybind11-m.data
+GitHubAnimate
 GitHubExo
 GitHubHystrix
 GitHubUws

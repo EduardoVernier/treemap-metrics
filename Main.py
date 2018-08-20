@@ -49,8 +49,8 @@ elif action == 'boxplots':
 elif action == 'scatter':
     dataset_ids = sys.argv[2:]
     Scatter.plot(dataset_ids, True, False)
-    Scatter.plot(dataset_ids, False, True)
-    Scatter.plot(dataset_ids, True, True)
+    # Scatter.plot(dataset_ids, False, True)
+    # Scatter.plot(dataset_ids, True, True)
 
 elif action == "matrix":
     dataset_ids = sys.argv[2:]
