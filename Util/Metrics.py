@@ -1,8 +1,11 @@
 import math
-import pandas as pd
-import numpy as np
-import Parser
 import os.path
+
+import numpy as np
+import pandas as pd
+
+from Util import Parser
+
 
 def compute_and_cache_metrics(dataset_id):
     # Returns a dict (one entry for each technique) with lists of dataframes

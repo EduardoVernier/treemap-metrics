@@ -5,16 +5,13 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 rcParams['font.family'] = 'monospace'
 import numpy as np
-import pandas as pd
-import math
 import os
 
-import Parser
-import Globals
+from Util import Globals, Parser
 
 
 def plot(dataset_ids):
-    os.makedirs('matrices', exist_ok=True)
+    os.makedirs('plots/matrices', exist_ok=True)
     # Plot AR matrix
     weighted_ar_matrix, unweighted_ar_matrix, technique_acronyms = make_ar_matrices(dataset_ids)
     print('war')
@@ -72,7 +69,7 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
 
     fig.colorbar(mat)
     fig.tight_layout()
-    fig.savefig('matrices/matrix-'+ metric_id +'.png', dpi=600)
+    fig.savefig('plots/matrices/matrix-'+ metric_id +'.png', dpi=600)
     # plt.show()
 
 

@@ -9,8 +9,8 @@ import pandas as pd
 import os
 from adjustText import adjust_text
 
-import Parser
-import Globals
+from Util import Globals, Parser
+
 
 def plot(dataset_ids, draw_data, draw_labels):
     averages = collect_averages(dataset_ids)
@@ -36,7 +36,7 @@ def plot(dataset_ids, draw_data, draw_labels):
             if draw_data:
                 plt.plot(x_line, y_line, c=colors[0], zorder=1, alpha=0.3)
             if draw_labels:
-                plt.text(point['inst'], point['ar'], str(int(i/len(Globals.acronyms))), color='black', ha='center', va='center', fontsize=7)
+                plt.text(point['inst'], point['ar'], str(int(i / len(Globals.acronyms))), color='black', ha='center', va='center', fontsize=7)
 
         if draw_data:
             plt.scatter(x_mean, y_mean, s=80, c=colors, label=labels, linewidth=1, zorder=10)
@@ -51,19 +51,19 @@ def plot(dataset_ids, draw_data, draw_labels):
     # plt.legend(loc=4)
 
 
-    os.makedirs('scatter', exist_ok=True)
+    os.makedirs('plots/scatter', exist_ok=True)
     if draw_data and draw_labels:
-        print("scatter/scatter-p+l.png")
+        print("plots/scatter/scatter-p+l.png")
         # fig.savefig("scatter/scatter-p+l.svg")
-        fig.savefig("scatter/scatter-p+l.png", dpi=500)
+        fig.savefig("plots/scatter/scatter-p+l.png", dpi=500)
     elif draw_data and not draw_labels:
-        print("scatter/scatter-p.png")
+        print("plots/scatter/scatter-p.png")
         # fig.savefig("scatter/scatter-p.svg")
-        fig.savefig("scatter/scatter-p.png", dpi=500)
+        fig.savefig("plots/scatter/scatter-p.png", dpi=500)
     elif draw_labels and not draw_data:
-        print("scatter/scatter-l.png")
+        print("plots/scatter/scatter-l.png")
         # fig.savefig("scatter/scatter-l.svg")
-        fig.savefig("scatter/scatter-l.png", dpi=500)
+        fig.savefig("plots/scatter/scatter-l.png", dpi=500)
 
     # plt.show()
     return None

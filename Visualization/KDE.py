@@ -10,7 +10,7 @@ from scipy import stats
 from mpl_toolkits.axes_grid1 import ImageGrid
 import os
 
-import Globals
+from Util import Globals
 
 
 def plot_real_vs_baseline(values, dataset_id, base_metric, log):
@@ -56,8 +56,8 @@ def plot_real_vs_baseline(values, dataset_id, base_metric, log):
         plt.axis('equal')
 
     colormap_mode_str = 'log' if log else 'linear'
-    os.makedirs('kde/' + base_metric + '/', exist_ok=True)
-    fig.savefig('kde/' + base_metric + '/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight', dpi=600)
+    os.makedirs('plots/kde/' + base_metric + '/', exist_ok=True)
+    fig.savefig('plots/kde/' + base_metric + '/' + dataset_id + '-' + base_metric + '-' + colormap_mode_str + '-kde' + '.png', bbox_inches='tight', dpi=600)
     # plt.draw()
     # plt.show()
     return None

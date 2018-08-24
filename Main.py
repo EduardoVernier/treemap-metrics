@@ -1,11 +1,13 @@
 import sys
 
-import KDE
-import Matrix
-import Metrics
-import Parser
-import Boxplots
-import Scatter
+from Util import Parser
+from Util import Metrics
+from Visualization import Boxplots
+from Visualization import KDE
+from Visualization import Matrix
+from Visualization import Scatter
+from Visualization import SimpleTrails
+from Visualization import DirectedTrails
 
 action = sys.argv[1]
 
@@ -56,5 +58,17 @@ elif action == "matrix":
     dataset_ids = sys.argv[2:]
     Matrix.plot(dataset_ids)
 
+elif action == "simple-trails":
+    dataset_id = sys.argv[2]
+    dataframes = Parser.parse_dataset(dataset_id)
+    SimpleTrails.plot(dataframes, dataset_id)
 
+elif action == "directed-trails":
+    dataset_id = sys.argv[2]
+    dataframes = Parser.parse_dataset(dataset_id)
+    DirectedTrails.plot(dataframes, dataset_id)
 
+elif action == "trail-heatmap":
+    dataset_id = sys.argv[2]
+    dataframes = Parser.parse_dataset(dataset_id)
+    SimpleTrails.plot(dataframes, dataset_id)

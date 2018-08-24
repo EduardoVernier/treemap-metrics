@@ -2,13 +2,13 @@ import matplotlib
 # Force matplotlib to not use any Xwindows backend.
 matplotlib.use('Agg')
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patheffects as pe
 import math
 import os
 
-import Globals
+from Util import Globals
+
 
 def plot_weighted_ar(values, dataset_id):
     nrow = 7
@@ -67,8 +67,8 @@ def plot_weighted_ar(values, dataset_id):
         bp = ax.bxp(statistics_list, showfliers=False, patch_artist=True, widths=1);
         styleBoxplot(bp, fig, ax, n_revisions)
         ax.set_ylim(ymin=0, ymax=1)
-    os.makedirs('boxplots/w_ar/', exist_ok=True)
-    fig.savefig('boxplots/w_ar/' + dataset_id + '-warbp.png')
+    os.makedirs('plots/boxplots/w_ar/', exist_ok=True)
+    fig.savefig('plots/boxplots/w_ar/' + dataset_id + '-warbp.png')
     # plt.show()
     return None
 
@@ -102,8 +102,8 @@ def plot_unweighted_ar(values, dataset_id):
         styleBoxplot(bp, fig, ax, len(data))
         ax.set_ylim(ymin=0, ymax=1)
 
-    os.makedirs('boxplots/u_ar/', exist_ok=True)
-    fig.savefig('boxplots/u_ar/' + dataset_id + '-uarbp.png')
+    os.makedirs('plots/boxplots/u_ar/', exist_ok=True)
+    fig.savefig('plots/boxplots/u_ar/' + dataset_id + '-uarbp.png')
     # plt.show()
     return None
 
@@ -144,8 +144,8 @@ def plot_instability(values, dataset_id, metric_id):
         ax.set_yticklabels([0, .25, .5, .75, 1], fontdict=None, minor=False)
         styleBoxplot(bp, fig, ax, len(data))
 
-    os.makedirs('boxplots/' + metric_id + '/', exist_ok=True)
-    fig.savefig('boxplots/' + metric_id + '/' + dataset_id + '-' + metric_id + 'bp.png')
+    os.makedirs('plots/boxplots/' + metric_id + '/', exist_ok=True)
+    fig.savefig('plots/boxplots/' + metric_id + '/' + dataset_id + '-' + metric_id + 'bp.png')
     return None
 
 
