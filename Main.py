@@ -8,6 +8,7 @@ from Visualization import Matrix
 from Visualization import Scatter
 from Visualization import SimpleTrails
 from Visualization import DirectedTrails
+from Visualization import TrailHeatmap
 
 action = sys.argv[1]
 
@@ -71,4 +72,4 @@ elif action == "directed-trails":
 elif action == "trail-heatmap":
     dataset_id = sys.argv[2]
     dataframes = Parser.parse_dataset(dataset_id)
-    SimpleTrails.plot(dataframes, dataset_id)
+    TrailHeatmap.plot(dataframes, dataset_id)
