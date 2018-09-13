@@ -3,6 +3,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 rcParams['font.family'] = 'monospace'
 import numpy as np
 import os
@@ -35,12 +36,13 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     fig = plt.figure()
     ax = fig.add_subplot(111)
     if metric_id == 'uar' or metric_id == 'war':
-        mat = ax.matshow(matrix, cmap=plt.cm.viridis)
+        mat = ax.matshow(matrix, cmap=plt.cm.summer)
     else:
-        mat = ax.matshow(matrix, cmap=plt.cm.viridis_r)  # Invert colormap for instability
+        mat = ax.matshow(matrix, cmap=plt.cm.summer_r)  # Invert colormap for instability
 
     # Ticks, labels and grids
-    ax.set_xticklabels(dataset_ids, rotation='vertical')
+    # ax.set_xticklabels(dataset_ids, rotation='vertical')
+    ax.set_xticklabels(['' for i in range(len(dataset_ids))], rotation='vertical')
     ax.set_xticks(range(len(dataset_ids)), minor=False)
     ax.set_yticklabels(technique_acronyms)
     ax.set_yticks(range(len(technique_acronyms)), minor=False)
@@ -67,8 +69,10 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     #         text_y = y + jump_y
     #         ax.text(text_x, text_y, label, color='black', ha='center', va='center', fontsize=9)
 
-    fig.colorbar(mat)
-    fig.tight_layout()
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="3%", pad=0.05)
+
+    plt.colorbar(mat, cax=cax)    # fig.tight_layout()
     fig.savefig('plots/matrices/matrix-'+ metric_id +'.png', dpi=600)
     # plt.show()
 
