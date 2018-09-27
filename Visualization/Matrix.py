@@ -35,10 +35,12 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
+
+
     if metric_id == 'uar' or metric_id == 'war':
-        mat = ax.matshow(matrix, cmap=plt.cm.summer)
+        mat = ax.matshow(matrix, cmap=plt.cm.gist_gray)
     else:
-        mat = ax.matshow(matrix, cmap=plt.cm.summer_r)  # Invert colormap for instability
+        mat = ax.matshow(matrix, cmap=plt.cm.gist_gray_r)  # Invert colormap for instability
 
     # Ticks, labels and grids
     # ax.set_xticklabels(dataset_ids, rotation='vertical')
@@ -72,9 +74,20 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="3%", pad=0.05)
 
+    plt.rc('text', usetex=True)
+
+    if metric_id == 'uar':
+        ax.set_title(r'$\rho$', size=24, fontdict={'family':'serif'}, loc='left')
+    elif metric_id == 'war':
+        ax.set_title(r'$\rho_W$', size=24, fontdict={'family':'serif'}, loc='left')
+    elif metric_id == 'ct':
+        ax.set_title(r'$\sigma_{CT}$', size=24, fontdict={'family':'serif'}, loc='left')
+    elif metric_id == 'rpc':
+        ax.set_title(r'$\sigma_{RP}$', size=24, fontdict={'family':'serif'}, loc='left')
+
     plt.colorbar(mat, cax=cax)
-    # fig.tight_layout()
-    fig.savefig('plots/matrices/matrix-'+ metric_id +'.png', dpi=600)
+    fig.tight_layout()
+    fig.savefig('plots/matrices/matrix-'+ metric_id +'.png', dpi=250)
     # plt.show()
 
 
