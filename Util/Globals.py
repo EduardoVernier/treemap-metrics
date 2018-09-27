@@ -13,6 +13,38 @@ acronyms = {
     'SquarifiedTreeMap': 'SQR',
     'StripTreeMap': 'STR'
 }
+#
+# tech_to_color = {
+#     'ApproximationTreeMap': '#a6cee3',
+#     'HilbertTreeMap': '#ff8c96',
+#     'MovesLocalMoves': '#b2df8a',
+#     'NoMovesLocalMoves': '#33a02c',
+#     'MooreTreeMap': '#ff6363',
+#     'PivotByMiddle': '#c48c54',
+#     'PivotBySize': '#fdbf6f',
+#     'PivotBySplit': '#ff7f00',
+#     'SliceAndDice': '#9a97ff',
+#     'SpiralTreeMap': '#6a3d9a',
+#     'SplitTreeMap': '#919114',
+#     'SquarifiedTreeMap': '#adffe4',
+#     'StripTreeMap': '#3cb29a'
+# }
+
+tech_to_color = {
+    'ApproximationTreeMap': '#ffd300',
+    'HilbertTreeMap': '#ff8c96',
+    'MovesLocalMoves': '#b2df8a',
+    'NoMovesLocalMoves': '#33a02c',
+    'MooreTreeMap': '#ff6363',
+    'PivotByMiddle': '#2396F6',
+    'PivotBySize': '#2556b4',
+    'PivotBySplit': '#000387',
+    'SliceAndDice': '#ff6c00',
+    'SpiralTreeMap': '#6a3d9a',
+    'SplitTreeMap': '#6c74ff',
+    'SquarifiedTreeMap': '#adffe4',
+    'StripTreeMap': '#3cb29a'
+}
 
 # ds = {
 #     'Cumulative4Year90HoursRating.csv': 'Movies C4Y90H',

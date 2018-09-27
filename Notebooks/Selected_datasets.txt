@@ -1,45 +1,42 @@
-Note	Title	maxNodes	timesteps	depthCategory	sizeVarianceCategory	sizeChangeCategory	dataChangeCategory
-	wb-EN.POP.DNST	216	57	2 or 3 levels	High variance	Low size change	Low data change
-	GitHubAnimate	80	50	2 or 3 levels	High variance	Low size change	Spiky data change
-	UNContradeCoffee	49	20	2 or 3 levels	High variance	Regular size change	Low data change
-	wb-IS.RRS.PASG.KM	88	37	2 or 3 levels	High variance	Regular size change	Regular data change
-	wb-BX.GSR.CMCP.ZS	182	58	2 or 3 levels	High variance	Regular size change	Spiky data change
-	wb-EN.ATM.NOXE.ZG	204	22	2 or 3 levels	High variance	Spiky size change	Low data change
-	wb-FR.INR.RISK	66	58	2 or 3 levels	High variance	Spiky size change	Regular data change
-	GitHubUws	59	122	2 or 3 levels	High variance	Spiky size change	Spiky data change
-	wb-EN.URB.MCTY.TL.ZS	115	58	2 or 3 levels	Low variance	Low size change	Low data change
-	wb-IQ.SCI.PRDC	146	14	2 or 3 levels	Low variance	Low size change	Spiky data change
-	WorldBankExports	186	56	2 or 3 levels	Low variance	Regular size change	Low data change
-	wb-GC.XPN.TOTL.GD.ZS	142	46	2 or 3 levels	Low variance	Regular size change	Regular data change
-	wb-EN.CO2.MANF.ZS	141	55	2 or 3 levels	Low variance	Regular size change	Spiky data change
-	wb-DT.TDS.MLAT.PG.ZS	123	47	2 or 3 levels	Low variance	Spiky size change	Low data change
-	wb-DT.GRE.OFFT	113	47	2 or 3 levels	Low variance	Spiky size change	Regular data change
-	wb-EN.CO2.ETOT.ZS	140	55	2 or 3 levels	Low variance	Spiky size change	Spiky data change
-Other 2 are huge	MoviesHC9Y1W	205	468	4+ levels	High variance	Low size change	Low data change
-Only one with this classification	gh-node-m	18656	7	4+ levels	High variance	Low size change	Regular data change
-	GitHubExo	640	97	4+ levels	High variance	Low size change	Spiky data change
-	gh-pybind11-m	133	36	4+ levels	High variance	Regular size change	Spiky data change
-Only one with this classification	gh-FlycoTabLayout-m	35	9	4+ levels	High variance	Spiky size change	Low data change
-Only one with this classification	tmbd-yearly-count-genres-children	741	20	4+ levels	High variance	Spiky size change	Regular data change
-	GitHubHystrix	446	61	4+ levels	High variance	Spiky size change	Spiky data change
-Only other choice has 3 nodes maximum	MoviesHC9Y7M	46	14	4+ levels	Low variance	Low size change	Low data change
-No other choice	baseball-pitching-BK	6	38	4+ levels	Low variance	Low size change	Spiky data change
-No smaller available	tmbd-yearly-std-genres-children	666	20	4+ levels	Low variance	Regular size change	Regular data change
-No smaller available	tmbd-yearly-mean-genres-2krand	1204	20	4+ levels	Low variance	Regular size change	Spiky data change
-Only other choice has 8 nodes maximum	tmbd-yearly-std-genres-2krand	919	20	4+ levels	Low variance	Spiky size change	Spiky data change
-	wb-EN.ATM.CO2E.KT.dataflat	206	55	Single level	High variance	Low size change	Low data change
-	wb-EN.ATM.METH.EG.KT.CE.dataflat	195	40	Single level	High variance	Low size change	Spiky data change
-	WorldbankHIV	108	25	Single level	High variance	Regular size change	Low data change
-	wb-TX.VAL.MMTL.ZS.UN.dataflat	163	56	Single level	High variance	Regular size change	Regular data change
-	wb-EN.CO2.BLDG.ZS.dataflat	139	55	Single level	High variance	Regular size change	Spiky data change
-	wb-DT.TDS.PNGC.CD.dataflat	74	47	Single level	High variance	Spiky size change	Low data change
-	wb-FR.INR.RISK.dataflat	66	58	Single level	High variance	Spiky size change	Regular data change
-	wb-TM.VAL.MRCH.R1.ZS.dataflat	204	57	Single level	High variance	Spiky size change	Spiky data change
-	wb-EN.ATM.CO2E.LF.ZS.dataflat	205	55	Single level	Low variance	Low size change	Low data change
-	wb-IQ.SCI.PRDC.dataflat	146	14	Single level	Low variance	Low size change	Spiky data change
-	DutchNames	61	22	Single level	Low variance	Regular size change	Low data change
-	wb-MS.MIL.XPND.ZS.dataflat	115	46	Single level	Low variance	Regular size change	Regular data change
-	wb-SP.POP.SCIE.RD.P6.dataflat	79	20	Single level	Low variance	Regular size change	Spiky data change
-	wb-NY.ADJ.SVNG.GN.ZS.dataflat	149	27	Single level	Low variance	Spiky size change	Low data change
-	wb-DT.MAT.OFFT.dataflat	113	47	Single level	Low variance	Spiky size change	Regular data change
-	wb-SE.PRE.ENRR.dataflat	149	48	Single level	Low variance	Spiky size change	Spiky data change
+Title	maxNodes	timesteps	depthCategory	sizeVarianceCategory	sizeChangeCategory	dataChangeCategory
+wb-EN.ATM.CO2E.LF.ZS.dataflat	205	55	Single level	Low variance	Low size change	Low data change
+wb-IQ.SCI.PRDC.dataflat	146	14	Single level	Low variance	Low size change	Spiky data change
+DutchNames	61	22	Single level	Low variance	Regular size change	Low data change
+wb-MS.MIL.XPND.ZS.dataflat	115	46	Single level	Low variance	Regular size change	Regular data change
+wb-SP.POP.SCIE.RD.P6.dataflat	79	20	Single level	Low variance	Regular size change	Spiky data change
+wb-NY.ADJ.SVNG.GN.ZS.dataflat	149	27	Single level	Low variance	Spiky size change	Low data change
+wb-DT.MAT.OFFT.dataflat	113	47	Single level	Low variance	Spiky size change	Regular data change
+wb-SE.PRE.ENRR.dataflat	149	48	Single level	Low variance	Spiky size change	Spiky data change
+wb-EN.ATM.CO2E.KT.dataflat	206	55	Single level	High variance	Low size change	Low data change
+wb-EN.ATM.METH.EG.KT.CE.dataflat	195	40	Single level	High variance	Low size change	Spiky data change
+WorldbankHIV	108	25	Single level	High variance	Regular size change	Low data change
+wb-TX.VAL.MMTL.ZS.UN.dataflat	163	56	Single level	High variance	Regular size change	Regular data change
+wb-EN.CO2.BLDG.ZS.dataflat	139	55	Single level	High variance	Regular size change	Spiky data change
+wb-DT.TDS.PNGC.CD.dataflat	74	47	Single level	High variance	Spiky size change	Low data change
+wb-FR.INR.RISK.dataflat	66	58	Single level	High variance	Spiky size change	Regular data change
+wb-TM.VAL.MRCH.R1.ZS.dataflat	204	57	Single level	High variance	Spiky size change	Spiky data change
+wb-EN.URB.MCTY.TL.ZS	115	58	2 or 3 levels	Low variance	Low size change	Low data change
+wb-IQ.SCI.PRDC	146	14	2 or 3 levels	Low variance	Low size change	Spiky data change
+WorldBankExports	186	56	2 or 3 levels	Low variance	Regular size change	Low data change
+wb-GC.XPN.TOTL.GD.ZS	142	46	2 or 3 levels	Low variance	Regular size change	Regular data change
+wb-EN.CO2.MANF.ZS	141	55	2 or 3 levels	Low variance	Regular size change	Spiky data change
+wb-DT.TDS.MLAT.PG.ZS	123	47	2 or 3 levels	Low variance	Spiky size change	Low data change
+wb-DT.GRE.OFFT	113	47	2 or 3 levels	Low variance	Spiky size change	Regular data change
+wb-EN.CO2.ETOT.ZS	140	55	2 or 3 levels	Low variance	Spiky size change	Spiky data change
+wb-EN.POP.DNST	216	57	2 or 3 levels	High variance	Low size change	Low data change
+GitHubAnimate	80	50	2 or 3 levels	High variance	Low size change	Spiky data change
+UNContradeCoffee	49	20	2 or 3 levels	High variance	Regular size change	Low data change
+wb-IS.RRS.PASG.KM	88	37	2 or 3 levels	High variance	Regular size change	Regular data change
+wb-BX.GSR.CMCP.ZS	182	58	2 or 3 levels	High variance	Regular size change	Spiky data change
+wb-EN.ATM.NOXE.ZG	204	22	2 or 3 levels	High variance	Spiky size change	Low data change
+wb-FR.INR.RISK	66	58	2 or 3 levels	High variance	Spiky size change	Regular data change
+GitHubUws	59	122	2 or 3 levels	High variance	Spiky size change	Spiky data change
+MoviesHC9Y7M	46	14	4+ levels	Low variance	Low size change	Low data change
+tmbd-yearly-std-genres-children	666	20	4+ levels	Low variance	Regular size change	Regular data change
+tmbd-yearly-mean-genres-2krand	1204	20	4+ levels	Low variance	Regular size change	Spiky data change
+MoviesHC9Y1W	205	468	4+ levels	High variance	Low size change	Low data change
+GitHubExo	640	97	4+ levels	High variance	Low size change	Spiky data change
+gh-pybind11-m	133	36	4+ levels	High variance	Regular size change	Spiky data change
+gh-FlycoTabLayout-m	35	9	4+ levels	High variance	Spiky size change	Low data change
+tmbd-yearly-count-genres-children	741	20	4+ levels	High variance	Spiky size change	Regular data change
+GitHubHystrix	446	61	4+ levels	High variance	Spiky size change	Spiky data change

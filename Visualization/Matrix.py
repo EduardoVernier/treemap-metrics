@@ -72,7 +72,8 @@ def plot_matrix(matrix, dataset_ids, technique_acronyms, metric_id):
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="3%", pad=0.05)
 
-    plt.colorbar(mat, cax=cax)    # fig.tight_layout()
+    plt.colorbar(mat, cax=cax)
+    # fig.tight_layout()
     fig.savefig('plots/matrices/matrix-'+ metric_id +'.png', dpi=600)
     # plt.show()
 
