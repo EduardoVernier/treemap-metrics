@@ -22,6 +22,7 @@ def compute_and_cache_metrics(dataset_id):
                 ar = compute_aspect_ratio(df, revision)
                 ar_df = pd.merge(ar_df, weight, how='outer', left_index=True, right_index=True)
                 ar_df = pd.merge(ar_df, ar, how='outer', left_index=True, right_index=True)
+            ar_df.fillna(0, inplace=True)
             ar_df.to_csv(ar_cache_path, index_label='id')
 
         # Compute Corner Travel (real and baseline)
@@ -34,6 +35,7 @@ def compute_and_cache_metrics(dataset_id):
                 b1 = df_list[revision + 1][['bx', 'by', 'bw', 'bh']].dropna(axis=0, subset=['bx'])
                 ct = corner_travel_values(r0, r1, b1, revision)
                 ct_df = pd.merge(ct_df, ct, how='outer', left_index=True, right_index=True)
+            ct_df.fillna(0, inplace=True)
             ct_df.to_csv(ct_cache_path, index_label='id')
 
         # Compute Relative Position Change metric
@@ -50,6 +52,7 @@ def compute_and_cache_metrics(dataset_id):
                 df_temp = pd.DataFrame({'r_' + str(revision): real, 'b_' + str(revision): baseline})
                 df_temp.sort_index(axis=1, ascending=False, inplace=True)
                 rpc_df = pd.merge(rpc_df, df_temp, how='outer', left_index=True, right_index=True)
+            rpc_df.fillna(0, inplace=True)
             rpc_df.to_csv(rpc_cache_path, index_label='id')
 
         print(' done.')
