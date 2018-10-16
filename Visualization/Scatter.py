@@ -47,7 +47,7 @@ def plot(dataset_ids, draw_data, draw_labels):
 
     plt.xlim(xmin=0) #xmax=0.35)
     plt.ylim(ymin=0, ymax=1)
-    # plt.legend(loc=4)
+    plt.legend(loc=4)
 
 
     os.makedirs('plots/scatter', exist_ok=True)
